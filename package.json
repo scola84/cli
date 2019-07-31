@@ -1,0 +1,1 @@
+{"name":"@scola/cli","version":"0.0.0","description":"Scola CLI","repository":"github:scola84/cli","author":"M.C. van den Boogaart <scola@kvdb.name>","license":"MIT","main":"./dist/cli.cjs.js","module":"./index.js","devDependencies":{"rollup":"^1.17.0","rollup-plugin-commonjs":"^10.0.1","rollup-plugin-node-resolve":"^5.2.0"}}
