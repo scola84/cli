@@ -11,7 +11,7 @@ export function exec() {
 
   const router = new Router({
     filter(box) {
-      return this._workers[box.command] ?
+      return this._downstreams[box.command] ?
         box.command : 'custom';
     }
   });

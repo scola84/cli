@@ -1,7 +1,7 @@
-import { MysqlBuilder } from '@scola/doc';
+import { SqlBuilder } from '@scola/doc';
 
 export function buildList() {
-  const b = new MysqlBuilder({
+  const b = new SqlBuilder({
     type: 'list'
   });
 

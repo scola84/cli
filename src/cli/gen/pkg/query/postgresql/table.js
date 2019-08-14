@@ -1,0 +1,29 @@
+export function table(s) {
+  s.build(
+    s.query(
+      s.select(
+        s.as(
+          'tables.table_name',
+          'name'
+        ),
+        s.query(
+          s.select('oid'),
+          s.from('pg_catalog.pg_class'),
+          s.where(
+            s.eq(
+              'relname',
+              'tables.table_name'
+            )
+          )
+        ).parens()
+      ),
+      s.from('information_schema.tables'),
+      s.where(
+        s.like(
+          'table_name',
+          s.value((box) => `%${box.object}%`)
+        )
+      )
+    )
+  );
+}

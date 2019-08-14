@@ -33,6 +33,11 @@ function action(options) {
   options.name = options._name;
 
   Worker.setLog((type, worker, box, data, callback, line) => {
+    if (type === 'fail' && data.logged !== true) {
+      console.log(data);
+      data.logged = true;
+    }
+
     if (type === 'cmd' && options.log.indexOf(type) > -1) {
       console.log(line);
     }

@@ -1,9 +1,9 @@
-import { MysqlBuilder } from '@scola/doc';
+import { SqlBuilder } from '@scola/doc';
 import { ViewBuilder } from '@scola/dom';
 import { buildInputForm } from '../../../../cmn';
 
 export function buildEdit() {
-  const b = new MysqlBuilder();
+  const b = new SqlBuilder();
   const v = new ViewBuilder();
 
   b.build(
@@ -12,7 +12,7 @@ export function buildEdit() {
       b.set(
         b.eq(
           'serial_number',
-          b.string((request, data) => data.serial_number)
+          b.value((request, data) => data.serial_number)
         )
       ),
       b.where(

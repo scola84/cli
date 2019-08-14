@@ -1,5 +1,11 @@
-import { MysqlBuilder } from '@scola/doc';
-import { Worker } from '@scola/worker';
+import { SqlBuilder } from '@scola/doc';
+
+import {
+  Router,
+  Slicer,
+  Unifier,
+  Worker
+} from '@scola/worker';
 
 import fs from 'fs-extra';
 import beautify from 'js-beautify';
@@ -12,110 +18,198 @@ import {
   formatList
 } from './pkg/format';
 
+import * as query from './pkg/query';
+
 export function pkg() {
-  const builder = new MysqlBuilder({
-    host: (box) => {
-      return box.host + '/information_schema';
-    },
-    type: 'list'
-  });
-
-  builder.build(
-    builder.query(
-      builder.select('*'),
-      builder.from('information_schema.COLUMNS'),
-      builder.where(
-        builder.and(
-          builder.eq(
-            'TABLE_SCHEMA',
-            builder.string((box) => box.database)
-          ),
-          builder.eq(
-            'TABLE_NAME',
-            builder.string((box) => box.object)
-          )
-        )
-      )
-    )
-  );
-
-  const processor = new Worker({
-    act(box, data, callback) {
-      const bdir = __dirname.slice(0, -5) + '/src/cli/gen/pkg';
-      const sdir = bdir + '/template';
-      const tdir = process.cwd();
-
-      const object = box.object;
-      const objectLc = object;
-      const objectUc = upperFirst(objectLc);
-
-      const header = '/* provisioned by scola */';
-
-      const options = {
-        bdir,
-        sdir,
-        tdir,
-        object
+  SqlBuilder.setHosts({
+    mysql: (box) => {
+      return {
+        dialect: 'mysql',
+        host: box.host,
+        dsn: box.host
       };
-
-      const columns = data.data.map((column) => {
-        column.options = qs.parse(column.COLUMN_COMMENT);
-        return column;
-      });
-
-      readDir(sdir, (error, files) => {
-        files.forEach((source) => {
-          const target = source
-            .replace(sdir, tdir)
-            .replace(/object/g, objectLc);
-
-          let targetContent = null;
-
-          try {
-            targetContent = String(fs.readFileSync(target));
-          } catch (e) {
-            targetContent = header;
-          }
-
-          if (targetContent.slice(0, header.length) !== header) {
-            return;
-          }
-
-          let sourceContent = String(fs.readFileSync(source));
-
-          if (/list\.js$/.test(source)) {
-            sourceContent = formatList(sourceContent, columns, options);
-          }
-
-          if (/input\.js$/.test(source)) {
-            sourceContent = formatInput(sourceContent, columns, options);
-          }
-
-          sourceContent = sourceContent
-            .replace(/__OBJECT_LC__/g, objectLc)
-            .replace(/__OBJECT_UC__/g, objectUc);
-
-          sourceContent = header + '\n\n' + sourceContent;
-
-          sourceContent = beautify.js(sourceContent, {
-            brace_style: 'collapse-preserve-inline',
-            end_with_newline: true,
-            indent_size: 2,
-            max_preserve_newlines: 2
-          });
-
-          fs.ensureFileSync(target);
-          fs.writeFileSync(target, sourceContent);
-        });
-
-        this.pass(box, data, callback);
-      });
-
+    },
+    postgres: (box) => {
+      return {
+        dialect: 'postgresql',
+        host: box.host,
+        dsn: box.host
+      };
     }
   });
 
-  builder
-    .connect(processor);
+  const mysqlTableSelector = new SqlBuilder({
+    decide(box) {
+      return box.host.indexOf('mysql') === 0;
+    },
+    host: 'mysql',
+    merge(box, data, { result }) {
+      return result;
+    }
+  });
 
-  return [builder, processor];
+  const mysqlColumnSelector = new SqlBuilder({
+    decide(box) {
+      return box.host.indexOf('mysql') === 0;
+    },
+    host: 'mysql',
+    merge(box, data, { result }) {
+      data.columns = result;
+      return data;
+    }
+  });
+
+  const postgresqlTableSelector = new SqlBuilder({
+    decide(box) {
+      return box.host.indexOf('postgres') === 0;
+    },
+    host: 'postgres',
+    merge(box, data, { result }) {
+      return result;
+    }
+  });
+
+  const postgresqlColumnSelector = new SqlBuilder({
+    decide(box) {
+      return box.host.indexOf('postgres') === 0;
+    },
+    host: 'postgres',
+    merge(box, data, { result }) {
+      data.columns = result;
+      return data;
+    }
+  });
+
+  const tableSlicer = new Slicer({
+    name: 'table'
+  });
+
+  const tableUnifier = new Unifier({
+    name: 'table'
+  });
+
+  const objectProcessor = new Worker({
+    act(box, data, callback) {
+      console.log('object', data);
+      this.pass(box, data, callback);
+    }
+  });
+
+  const linkProcessor = new Worker({
+    act(box, data, callback) {
+      console.log('link', data);
+      this.pass(box, data, callback);
+    }
+  });
+
+  const router = new Router({
+    decide(box, data) {
+      return typeof data.name === 'string' ?
+        true : null;
+    },
+    filter(box, data) {
+      return data.name.indexOf('_') === -1 ?
+        'object' : 'link';
+    }
+  });
+
+  query.mysql.column(mysqlColumnSelector);
+  query.mysql.table(mysqlTableSelector);
+  query.postgresql.column(postgresqlColumnSelector);
+  query.postgresql.table(postgresqlTableSelector);
+
+  mysqlTableSelector
+    .connect(postgresqlTableSelector)
+    .connect(tableSlicer)
+    .connect(mysqlColumnSelector)
+    .connect(postgresqlColumnSelector)
+    .connect(
+      router.bypass(tableUnifier)
+    );
+
+  router
+    .connect('object', objectProcessor)
+    .connect(tableUnifier);
+
+  router
+    .connect('link', linkProcessor)
+    .connect(tableUnifier);
+
+  return [mysqlTableSelector, tableUnifier];
+
+  //
+  // const processor = new Worker({
+  //   act(box, data, callback) {
+  //     const bdir = __dirname.slice(0, -5) + '/src/cli/gen/pkg';
+  //     const sdir = bdir + '/template';
+  //     const tdir = process.cwd();
+  //
+  //     const object = box.object;
+  //     const objectLc = object;
+  //     const objectUc = upperFirst(objectLc);
+  //
+  //     const header = '/* provisioned by scola */';
+  //
+  //     const options = {
+  //       bdir,
+  //       sdir,
+  //       tdir,
+  //       object
+  //     };
+  //
+  //     const columns = data.data.map((column) => {
+  //       column.options = qs.parse(column.COLUMN_COMMENT);
+  //       return column;
+  //     });
+  //
+  //     readDir(sdir, (error, files) => {
+  //       files.forEach((source) => {
+  //         const target = source
+  //           .replace(sdir, tdir)
+  //           .replace(/object/g, objectLc);
+  //
+  //         let targetContent = null;
+  //
+  //         try {
+  //           targetContent = String(fs.readFileSync(target));
+  //         } catch (e) {
+  //           targetContent = header;
+  //         }
+  //
+  //         if (targetContent.slice(0, header.length) !== header) {
+  //           return;
+  //         }
+  //
+  //         let sourceContent = String(fs.readFileSync(source));
+  //
+  //         if (/list\.js$/.test(source)) {
+  //           sourceContent = formatList(sourceContent, columns, options);
+  //         }
+  //
+  //         if (/input\.js$/.test(source)) {
+  //           sourceContent = formatInput(sourceContent, columns, options);
+  //         }
+  //
+  //         sourceContent = sourceContent
+  //           .replace(/__OBJECT_LC__/g, objectLc)
+  //           .replace(/__OBJECT_UC__/g, objectUc);
+  //
+  //         sourceContent = header + '\n\n' + sourceContent;
+  //
+  //         sourceContent = beautify.js(sourceContent, {
+  //           brace_style: 'collapse-preserve-inline',
+  //           end_with_newline: true,
+  //           indent_size: 2,
+  //           max_preserve_newlines: 2
+  //         });
+  //
+  //         fs.ensureFileSync(target);
+  //         fs.writeFileSync(target, sourceContent);
+  //       });
+  //
+  //       this.pass(box, data, callback);
+  //     });
+  //
+  //   }
+  // });
 }

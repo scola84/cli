@@ -1,9 +1,9 @@
-import { MysqlBuilder } from '@scola/doc';
+import { SqlBuilder } from '@scola/doc';
 import { ViewBuilder } from '@scola/dom';
 import { buildInputForm } from '../../../../cmn';
 
 export function buildAdd() {
-  const b = new MysqlBuilder({
+  const b = new SqlBuilder({
     key: '__OBJECT_LC___id',
     type: 'insert'
   });
@@ -17,7 +17,7 @@ export function buildAdd() {
       b.set(
         b.eq(
           'serial_number',
-          b.string((request, data) => data.serial_number)
+          b.value((request, data) => data.serial_number)
         )
       )
     )
