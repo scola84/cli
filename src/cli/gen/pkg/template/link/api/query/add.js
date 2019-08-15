@@ -16,7 +16,8 @@ export function buildAdd() {
         '/*object*/_id',
         '/*link*/_id'
         /* #columns */
-        , '/*name*/'
+        ,
+        '/*name*/'
         /* /columns */
       ).parens(),
       s.values(

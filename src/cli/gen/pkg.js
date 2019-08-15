@@ -1,7 +1,6 @@
 import { SqlBuilder } from '@scola/doc';
 
 import {
-  Router,
   Slicer,
   Unifier,
   Worker
@@ -137,8 +136,11 @@ export function pkg() {
   });
 
   const mysqlLinkSelector = new SqlBuilder({
-    decide(box) {
-      return box.host.indexOf('mysql') === 0;
+    decide(box, data) {
+      return (
+        box.host.indexOf('mysql') === 0 &&
+        typeof data.link !== 'undefined'
+      );
     },
     host: 'mysql',
     merge(box, data, { result }) {
@@ -147,8 +149,11 @@ export function pkg() {
   });
 
   const postgresqlLinkSelector = new SqlBuilder({
-    decide(box) {
-      return box.host.indexOf('postgres') === 0;
+    decide(box, data) {
+      return (
+        box.host.indexOf('postgresql') === 0 &&
+        typeof data.link !== 'undefined'
+      );
     },
     host: 'postgres',
     merge(box, data, { result }) {
@@ -164,12 +169,14 @@ export function pkg() {
     name: 'table'
   });
 
-  const objectProcessor = new Worker({
+  const processor = new Worker({
     act(box, data, callback) {
       const header = '/* provisioned by scola */';
 
-      const bdir = __dirname.slice(0, -5) + '/src/cli/gen/pkg';
-      const sdir = bdir + '/template/object';
+      const sdir = __dirname.slice(0, -5) +
+        '/src/cli/gen/pkg/template/' +
+        (data.link ? 'link' : 'object');
+
       const tdir = process.cwd();
 
       let options = findup
@@ -186,7 +193,7 @@ export function pkg() {
             .split('/');
 
           target
-            .splice(-1, 0, box.object);
+            .splice(-1, 0, data.link ? data.link : data.object);
 
           target = target.join('/');
 
@@ -222,22 +229,9 @@ export function pkg() {
           fs.ensureFileSync(target);
           fs.writeFileSync(target, sourceContent);
         });
+
+        this.pass(box, data, callback);
       });
-
-      this.pass(box, data, callback);
-    }
-  });
-
-  const linkProcessor = new Worker({
-    act(box, data, callback) {
-      this.pass(box, data, callback);
-    }
-  });
-
-  const router = new Router({
-    filter(box, data) {
-      return typeof data.link === 'undefined' ?
-        'object' : 'link';
     }
   });
 
@@ -250,17 +244,9 @@ export function pkg() {
   mysqlColumnSelector
     .connect(postgresqlColumnSelector)
     .connect(slicer)
-    .connect(router);
-
-  router
-    .connect('object', objectProcessor)
-    .connect(unifier);
-
-  router
-    .connect('link', new Worker())
     .connect(mysqlLinkSelector)
     .connect(postgresqlLinkSelector)
-    .connect(linkProcessor)
+    .connect(processor)
     .connect(unifier);
 
   return [mysqlColumnSelector, unifier];

@@ -32,6 +32,7 @@ export function buildList() {
           s.search().columns(
             /* #search */
             '/*link*/./*name*/'
+            /*comma*/
             /* /search */
           )
           .search((request) => {
@@ -43,6 +44,7 @@ export function buildList() {
         s.order().columns(
           /* #order */
           '/*link*/./*name*/'
+          /*comma*/
           /* /order */
         )
         .default(
@@ -50,6 +52,7 @@ export function buildList() {
           s['/*direction*/'](
             s.id('/*link*/./*name*/')
           )
+          /*comma*/
           /* /default */
         )
         .order((request) => {
