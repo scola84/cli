@@ -1,7 +1,2 @@
-import * as mysql from './mysql';
-import * as postgresql from './postgresql';
-
-export {
-  mysql,
-  postgresql
-};
+export * from './mysql';
+export * from './postgresql';

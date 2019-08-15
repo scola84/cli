@@ -1,1 +1,27 @@
-{"name":"@scola/cli","version":"0.0.0","description":"Scola CLI","repository":"github:scola84/cli","author":"M.C. van den Boogaart <scola@kvdb.name>","license":"MIT","main":"./dist/cli.cjs.js","module":"./index.js","devDependencies":{"rollup":"^1.17.0","rollup-plugin-commonjs":"^10.0.1","rollup-plugin-node-resolve":"^5.2.0"}}
+{
+  "name": "@scola/cli",
+  "version": "0.0.0",
+  "description": "Scola CLI",
+  "repository": "github:scola84/cli",
+  "author": "M.C. van den Boogaart <scola@kvdb.name>",
+  "license": "MIT",
+  "main": "./dist/cli.cjs.js",
+  "module": "./index.js",
+  "devDependencies": {
+    "rollup": "^1.17.0",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "commander": "^3.0.0",
+    "find-up": "^4.1.0",
+    "fs-extra": "^8.1.0",
+    "js-beautify": "^1.10.2",
+    "lodash-es": "^4.17.15",
+    "mustache": "^3.0.1",
+    "qs": "^6.7.0",
+    "recursive-readdir": "^2.2.2",
+    "source-map-support": "^0.5.13",
+    "xregexp": "^4.2.4"
+  }
+}

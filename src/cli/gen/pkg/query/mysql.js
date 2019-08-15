@@ -1,7 +1,11 @@
-export function column(s) {
+export function mysql(s, name) {
   s.build(
     s.query(
       s.select(
+        s.as(
+          'COLUMNS.TABLE_NAME',
+          s.id('table')
+        ),
         s.as(
           'COLUMNS.COLUMN_NAME',
           'name'
@@ -23,7 +27,7 @@ export function column(s) {
         ),
         s.as(
           'COLUMNS.COLUMN_COMMENT',
-          'comment'
+          'options'
         ),
         s.as(
           s.eq(
@@ -53,8 +57,10 @@ export function column(s) {
       s.from('information_schema.COLUMNS'),
       s.where(
         s.eq(
-          'COLUMNS.TABLE_NAME',
-          s.value((box, data) => data.name)
+          s.like(
+            'COLUMNS.TABLE_NAME',
+            s.value(name)
+          )
         )
       )
     )

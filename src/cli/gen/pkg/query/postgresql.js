@@ -1,7 +1,11 @@
-export function column(s) {
+export function postgresql(s, name) {
   s.build(
     s.query(
       s.select(
+        s.as(
+          'columns.table_name',
+          'table'
+        ),
         s.as(
           'columns.column_name',
           'name'
@@ -23,11 +27,18 @@ export function column(s) {
         ),
         s.as(
           s.query(
-            s.select((box, data) => {
-              return `pg_catalog.col_description(${data.oid},columns.ordinal_position)`;
-            })
+            s.select(
+              'pg_catalog.col_description(pg_class.oid,columns.ordinal_position)'
+            ),
+            s.from('pg_catalog.pg_class'),
+            s.where(
+              s.eq(
+                'relname',
+                'columns.table_name'
+              )
+            )
           ).parens(),
-          'comment'
+          'options'
         ),
         s.as(
           s.query(
@@ -85,9 +96,9 @@ export function column(s) {
       ),
       s.from('information_schema.columns'),
       s.where(
-        s.eq(
+        s.like(
           'columns.table_name',
-          s.value((box, data) => data.name)
+          s.value(name)
         )
       )
     )

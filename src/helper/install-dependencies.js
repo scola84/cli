@@ -13,6 +13,7 @@ const skip = [
   'http',
   'net',
   'os',
+  'path',
   'process',
   'readline',
   'stream',
