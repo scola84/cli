@@ -32,15 +32,15 @@ export function select(v) {
       /*#each values */
       v.option()
       .attributes({
-        value: '/*.*/'
+        value: '/*value*/'
       })
-      /*#if ../link*/
+      /*#if link*/
       .text(
-        v.print().format('/*../object*/.link./*../link*/.form.value./*.*/')
+        v.print().format('/*object*/.link./*link*/.form.value./*value*/')
       )
       /*else*/
       .text(
-        v.print().format('/*../object*/.form.value./*.*/')
+        v.print().format('/*object*/.form.value./*value*/')
       )
       /*/if*/
       /*comma*/

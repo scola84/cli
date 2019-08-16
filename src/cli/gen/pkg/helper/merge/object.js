@@ -1,5 +1,5 @@
 import groupBy from 'lodash-es/groupBy';
-import qs from 'qs';
+import { mergeField } from './field';
 
 export function mergeObject(data) {
   data = groupBy(data, 'table');
@@ -15,14 +15,9 @@ export function mergeObject(data) {
       });
     }
 
-    const fields = data[table].filter((field) => {
-      field.link = link;
-      field.object = object;
-      field.options = qs.parse(field.options);
-      field.group = field.group || 'default';
-      field.values = (field.values || '').split(',');
-      return !field.primary;
-    });
+    const fields = data[table]
+      .filter((field) => !field.primary)
+      .map((field) => mergeField(object, link, field));
 
     let groups = groupBy(fields, 'group');
 
@@ -47,8 +42,6 @@ export function mergeObject(data) {
       order: [],
       search: []
     };
-
-    // why name?
 
     definition.groups.forEach((group) => {
       group.fields.forEach((field) => {
