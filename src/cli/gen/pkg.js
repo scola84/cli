@@ -6,13 +6,11 @@ import {
   Worker
 } from '@scola/worker';
 
-import findup from 'find-up';
-import fs from 'fs-extra';
-import beautify from 'js-beautify';
-import groupBy from 'lodash-es/groupBy';
-import Mustache from 'mustache';
-import qs from 'qs';
-import readDir from 'recursive-readdir';
+import {
+  generate,
+  mergeLink,
+  mergeObject
+} from './pkg/helper';
 
 import * as query from './pkg/query';
 
@@ -34,104 +32,21 @@ export function pkg() {
     }
   });
 
-  function merge(data) {
-    data = groupBy(data, 'table');
-
-    return Object.keys(data).map((table) => {
-      const [object, link] = table.split('_');
-
-      const columns = data[table].filter((column) => {
-        return !column.pk;
+  const generator = new Worker({
+    act(box, data, callback) {
+      generate(box, data, () => {
+        this.pass(box, data, callback);
       });
+    }
+  });
 
-      const definition = {
-        table,
-        object,
-        link,
-        columns,
-        search: [],
-        default: [],
-        order: []
-      };
-
-      definition.columns.forEach((column, index, all) => {
-        column.comma = index < all.length - 1 ? ',' : '';
-        column.options = qs.parse(column.options);
-
-        if (column.options.default) {
-          definition.default.push({
-            name: column.name,
-            direction: column.options.default
-          });
-        }
-
-        if (column.options.order === '') {
-          definition.order.push({
-            name: column.name
-          });
-        }
-
-        if (column.options.search === '') {
-          definition.search.push({
-            name: column.name
-          });
-        }
-      });
-
-      definition.default.forEach((column, index, all) => {
-        column.comma = index < all.length - 1 ? ',' : '';
-      });
-
-      definition.order.forEach((column, index, all) => {
-        column.comma = index < all.length - 1 ? ',' : '';
-      });
-
-      definition.search.forEach((column, index, all) => {
-        column.comma = index < all.length - 1 ? ',' : '';
-      });
-
-      return definition;
-    });
-  }
-
-  function mergeLink(data, result) {
-    [result] = merge(result);
-
-    data.search = result.search.map((column) => {
-      column.link = data.link;
-      return column;
-    });
-
-    data.default = result.default.map((column) => {
-      column.link = data.link;
-      return column;
-    });
-
-    data.order = result.order.map((column) => {
-      column.link = data.link;
-      return column;
-    });
-
-    return data;
-  }
-
-  const mysqlColumnSelector = new SqlBuilder({
+  const mysqlObjectSelector = new SqlBuilder({
     decide(box) {
       return box.host.indexOf('mysql') === 0;
     },
     host: 'mysql',
     merge(box, data, { result }) {
-      return merge(result);
-    }
-  });
-
-  const postgresqlColumnSelector = new SqlBuilder({
-    decide(box) {
-      return box.host.indexOf('postgres') === 0;
-    },
-    host: 'postgres',
-    merge(box, data, { result }) {
-      return merge(result);
+      return mergeObject(result);
     }
   });
 
@@ -145,6 +60,16 @@ export function pkg() {
     host: 'mysql',
     merge(box, data, { result }) {
       return mergeLink(data, result);
+    }
+  });
+
+  const postgresqlObjectSelector = new SqlBuilder({
+    decide(box) {
+      return box.host.indexOf('postgres') === 0;
+    },
+    host: 'postgres',
+    merge(box, data, { result }) {
+      return mergeObject(result);
     }
   });
 
@@ -169,85 +94,19 @@ export function pkg() {
     name: 'table'
   });
 
-  const processor = new Worker({
-    act(box, data, callback) {
-      const header = '/* provisioned by scola */';
-
-      const sdir = __dirname.slice(0, -5) +
-        '/src/cli/gen/pkg/template/' +
-        (data.link ? 'link' : 'object');
-
-      const tdir = process.cwd();
-
-      let options = findup
-        .sync('.jsbeautifyrc.json');
-
-      options = options ? JSON.parse(
-        fs.readFileSync(options)
-      ) : {};
-
-      readDir(sdir, (error, files) => {
-        files.forEach((source) => {
-          let target = source
-            .replace(sdir, tdir)
-            .split('/');
-
-          target
-            .splice(-1, 0, data.link ? data.link : data.object);
-
-          target = target.join('/');
-
-          let targetContent = null;
-
-          try {
-            targetContent = String(fs.readFileSync(target));
-          } catch (e) {
-            targetContent = header;
-          }
-
-          if (targetContent.slice(0, header.length) !== header) {
-            return;
-          }
-
-          let sourceContent = String(fs.readFileSync(source));
-
-          sourceContent = sourceContent
-            .replace(/\n\s+(\/\*comma\*\/)/g, '$1');
-
-          sourceContent = Mustache.render(
-            sourceContent,
-            data, {},
-            ['/*', '*/']
-          );
-
-          sourceContent = sourceContent
-            .replace(/\['(\w+)'\]/g, '.$1');
-
-          sourceContent = header + '\n\n' + sourceContent;
-          sourceContent = beautify.js(sourceContent, options);
-
-          fs.ensureFileSync(target);
-          fs.writeFileSync(target, sourceContent);
-        });
-
-        this.pass(box, data, callback);
-      });
-    }
-  });
-
-  query.mysql(mysqlColumnSelector, (box) => `%${box.object}%`);
-  query.postgresql(postgresqlColumnSelector, (box) => `%${box.object}%`);
+  query.mysql(mysqlObjectSelector, (box) => `%${box.object}%`);
+  query.postgresql(postgresqlObjectSelector, (box) => `%${box.object}%`);
 
   query.mysql(mysqlLinkSelector, (box, data) => `${data.link}`);
   query.postgresql(postgresqlLinkSelector, (box, data) => `${data.link}`);
 
-  mysqlColumnSelector
-    .connect(postgresqlColumnSelector)
+  mysqlObjectSelector
+    .connect(postgresqlObjectSelector)
     .connect(slicer)
     .connect(mysqlLinkSelector)
     .connect(postgresqlLinkSelector)
-    .connect(processor)
+    .connect(generator)
     .connect(unifier);
 
-  return [mysqlColumnSelector, unifier];
+  return [mysqlObjectSelector, unifier];
 }

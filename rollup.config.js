@@ -7,6 +7,7 @@ const external = [
   '@scola/worker',
   'child_process',
   'commander',
+  'find-up',
   'fs',
   'fs-extra',
   'qs',
