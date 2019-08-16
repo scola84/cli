@@ -1,6 +1,6 @@
 import { SqlBuilder } from '@scola/doc';
 import { ViewBuilder } from '@scola/dom';
-import { buildInput } from '../../../cmn/view//*object*//input';
+import { buildFieldset } from '../../../cmn/view//*object*//fieldset';
 
 export function buildEdit() {
   const s = new SqlBuilder();
@@ -12,7 +12,8 @@ export function buildEdit() {
         s.id('/*object*/')
       ),
       s.set(
-        /* #columns */
+        /* #groups */
+        /* #fields */
         s.eq(
           s.id('/*name*/'),
           s.value((request, data) => {
@@ -20,7 +21,8 @@ export function buildEdit() {
           })
         )
         /*comma*/
-        /* /columns */
+        /* /fields */
+        /* /groups */
       ),
       s.where(
         s.eq(
@@ -35,7 +37,7 @@ export function buildEdit() {
 
   v.build(
     v.validate(
-      buildInput(v)
+      buildFieldset(v)
     ).err(
       v.throw()
     )

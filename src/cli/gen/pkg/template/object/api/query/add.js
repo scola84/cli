@@ -1,6 +1,6 @@
 import { SqlBuilder } from '@scola/doc';
 import { ViewBuilder } from '@scola/dom';
-import { buildInput } from '../../../cmn/view//*object*//input';
+import { buildFieldset } from '../../../cmn/view//*object*//fieldset';
 
 export function buildAdd() {
   const s = new SqlBuilder({
@@ -17,25 +17,29 @@ export function buildAdd() {
         s.id('/*object*/')
       ),
       s.id(
-        /* #columns */
+        /* #groups */
+        /* #fields */
         '/*name*/'
         /*comma*/
-        /* /columns */
+        /* /fields */
+        /* /groups */
       ).parens(),
       s.values(
-        /* #columns */
+        /* #groups */
+        /* #fields */
         s.value((request, data) => {
           return data['/*name*/'];
         })
         /*comma*/
-        /* /columns */
+        /* /fields */
+        /* /groups */
       )
     )
   );
 
   v.build(
     v.validate(
-      buildInput(v)
+      buildFieldset(v)
     ).err(
       v.throw()
     )

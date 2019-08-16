@@ -6,8 +6,12 @@ import {
   Worker
 } from '@scola/worker';
 
+import findup from 'find-up';
+import fs from 'fs-extra';
+
 import {
-  generate,
+  generateAcg,
+  generateCustom,
   mergeLink,
   mergeObject
 } from './pkg/helper';
@@ -32,11 +36,46 @@ export function pkg() {
     }
   });
 
-  const generator = new Worker({
+  const customGenerator = new Worker({
     act(box, data, callback) {
-      generate(box, data, () => {
+      generateCustom(box, data, () => {
         this.pass(box, data, callback);
       });
+    }
+  });
+
+  const linkGenerator = new Worker({
+    decide(box, data) {
+      return typeof data.link !== 'undefined';
+    },
+    act(box, data, callback) {
+      generateAcg(box, data, () => {
+        this.pass(box, data, callback);
+      }, 'link');
+    }
+  });
+
+  const objectGenerator = new Worker({
+    decide(box, data) {
+      return typeof data.link === 'undefined';
+    },
+    act(box, data, callback) {
+      generateAcg(box, data, () => {
+        this.pass(box, data, callback);
+      }, 'object');
+    }
+  });
+
+  const optionsFinder = new Worker({
+    act(box, data, callback) {
+      const options = findup
+        .sync('.jsbeautifyrc.json');
+
+      box.beautify = options ? JSON.parse(
+        fs.readFileSync(options)
+      ) : {};
+
+      this.pass(box, data, callback);
     }
   });
 
@@ -100,13 +139,16 @@ export function pkg() {
   query.mysql(mysqlLinkSelector, (box, data) => `${data.link}`);
   query.postgresql(postgresqlLinkSelector, (box, data) => `${data.link}`);
 
-  mysqlObjectSelector
+  optionsFinder
+    .connect(mysqlObjectSelector)
     .connect(postgresqlObjectSelector)
+    .connect(customGenerator)
     .connect(slicer)
     .connect(mysqlLinkSelector)
     .connect(postgresqlLinkSelector)
-    .connect(generator)
+    .connect(objectGenerator)
+    .connect(linkGenerator)
     .connect(unifier);
 
-  return [mysqlObjectSelector, unifier];
+  return [optionsFinder, unifier];
 }

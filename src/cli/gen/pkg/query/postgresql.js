@@ -66,7 +66,7 @@ export function postgresql(s, name) {
               )
             )
           ).parens(),
-          'pk'
+          'primary'
         ),
         s.as(
           s.query(

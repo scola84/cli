@@ -1,2 +1,2 @@
-export * from './act';
+export * from './generate';
 export * from './merge';

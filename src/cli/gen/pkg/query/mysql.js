@@ -34,7 +34,7 @@ export function mysql(s, name) {
             'COLUMNS.COLUMN_KEY',
             s.value('PRI')
           ),
-          'pk'
+          'primary'
         ),
         s.as(
           s.replace(
