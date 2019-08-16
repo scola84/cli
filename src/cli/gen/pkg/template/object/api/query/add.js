@@ -17,22 +17,22 @@ export function buildAdd() {
         s.id('/*object*/')
       ),
       s.id(
-        /* #groups */
-        /* #fields */
+        /*#each groups*/
+        /*#each fields*/
         '/*name*/'
         /*comma*/
-        /* /fields */
-        /* /groups */
+        /*/each*/
+        /*/each*/
       ).parens(),
       s.values(
-        /* #groups */
-        /* #fields */
+        /*#each groups*/
+        /*#each fields*/
         s.value((request, data) => {
           return data['/*name*/'];
         })
         /*comma*/
-        /* /fields */
-        /* /groups */
+        /*/each*/
+        /*/each*/
       )
     )
   );

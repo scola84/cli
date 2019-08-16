@@ -16,8 +16,11 @@ export function mergeObject(data) {
     }
 
     const fields = data[table].filter((field) => {
+      field.link = link;
+      field.object = object;
       field.options = qs.parse(field.options);
       field.group = field.group || 'default';
+      field.values = (field.values || '').split(',');
       return !field.primary;
     });
 
@@ -25,6 +28,7 @@ export function mergeObject(data) {
 
     groups = Object.keys(groups).map((name) => {
       return {
+        link,
         name,
         object,
         fields: groups[name]
@@ -38,17 +42,21 @@ export function mergeObject(data) {
       object,
       table,
       name: link || object,
+      custom: [],
       default: [],
       order: [],
       search: []
     };
 
-    definition.groups.forEach((group, gindex, gall) => {
-      group.fields.forEach((field, findex, fall) => {
-        field.comma = (
-          gindex === gall.length - 1 &&
-          findex === fall.length - 1
-        ) ? '' : ',';
+    // why name?
+
+    definition.groups.forEach((group) => {
+      group.fields.forEach((field) => {
+        if (field.options.custom) {
+          definition.custom.push({
+            name: field.name
+          });
+        }
 
         if (field.options.default) {
           definition.default.push({
@@ -57,30 +65,18 @@ export function mergeObject(data) {
           });
         }
 
-        if (field.options.order === '') {
+        if (field.options.order) {
           definition.order.push({
             name: field.name
           });
         }
 
-        if (field.options.search === '') {
+        if (field.options.search) {
           definition.search.push({
             name: field.name
           });
         }
       });
-    });
-
-    definition.default.forEach((column, index, all) => {
-      column.comma = index === all.length - 1 ? '' : ',';
-    });
-
-    definition.order.forEach((column, index, all) => {
-      column.comma = index === all.length - 1 ? '' : ',';
-    });
-
-    definition.search.forEach((column, index, all) => {
-      column.comma = index === all.length - 1 ? '' : ',';
     });
 
     return definition;

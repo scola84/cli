@@ -12,8 +12,8 @@ export function buildEdit() {
         s.id('/*object*/')
       ),
       s.set(
-        /* #groups */
-        /* #fields */
+        /*#each groups*/
+        /*#each fields*/
         s.eq(
           s.id('/*name*/'),
           s.value((request, data) => {
@@ -21,8 +21,8 @@ export function buildEdit() {
           })
         )
         /*comma*/
-        /* /fields */
-        /* /groups */
+        /*/each*/
+        /*/each*/
       ),
       s.where(
         s.eq(

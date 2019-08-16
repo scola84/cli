@@ -3,11 +3,11 @@ export function buildListCore(v) {
     v.group().class('list').append(
       v.title(
         v.div().text(
-          v.print().format('*link*/.title.d')
+          v.print().format('/*link*/.title.d')
         )
       ),
       v.body(
-        v.getList().name('/*object*/', '*link*/').append(
+        v.getList().name('/*object*/', '/*link*/').append(
           v.list().empty(
             v.item().append(
               v.label(
@@ -22,20 +22,20 @@ export function buildListCore(v) {
                 v.click(
                   v.button().class('edit ion-ios-information-circle-outline')
                 ).act(
-                  v.route().view('edit-/*object*/-*link*/:{/*object*/_id,*link*/_id}@pop')
+                  v.route().view('edit-/*object*/-/*link*/:{/*object*/_id,/*link*/_id}@pop')
                 ),
                 v.label(
                   v.anchor().class('l1').text(
-                    v.print().format('/*object*/.link.*link*/.list.item.l1')
+                    v.print().format('/*object*/.link./*link*/.list.item.l1')
                   ),
                   v.div().class('l2').text(
-                    v.print().format('/*object*/.link.*link*/.list.item.l2')
+                    v.print().format('/*object*/.link./*link*/.list.item.l2')
                   )
                 ),
                 v.icon().class('ion-ios-arrow-forward')
               )
             ).act(
-              v.route().view('view-*link*/:{*link*/_id}@main:rtl&mem')
+              v.route().view('view-/*link*/:{/*link*/_id}@main:rtl&mem')
             )
           )
         )

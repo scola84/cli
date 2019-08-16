@@ -1,25 +1,27 @@
-/* custom */
+/*#if custom.length */
+/*> custom*/
+/*/if*/
 
 export function buildFieldset(v) {
   return v.fieldset(
-    /* #groups */
+    /*#each groups*/
     v.group(
       v.title().text(
-        v.print().format('/*object*/.form.title./*name*/')
+        v.print().format('/*object*/.link./*link*/.form.title./*name*/')
       ),
       v.body(
-        /* #fields */
+        /*#each fields*/
         v.item(
-          v.label(
-            v.div().class('l1').text(
-              v.print().format('/*object*/.form.label./*name*/')
-            )
-          )
+          /*> label*/
+          /*comma always=true*/
+          /*> (lookup options 'type')*/
+          /*comma always=true*/
+          /*> hint*/
         )
         /*comma*/
-        /* /fields */
+        /*/each*/
       )
     )
-    /* /groups */
+    /*/each*/
   );
 }

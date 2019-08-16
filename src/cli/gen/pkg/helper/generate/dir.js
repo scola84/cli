@@ -1,7 +1,7 @@
 import readDir from 'recursive-readdir';
 import { generateFile } from './file';
 
-export function generateAcg(box, data, callback, type) {
+export function generateDir(box, data, callback, type) {
   const sdir = __dirname.slice(0, -5) +
     '/src/cli/gen/pkg/template/' +
     type;
@@ -14,8 +14,9 @@ export function generateAcg(box, data, callback, type) {
         .replace(sdir, tdir)
         .split('/');
 
-      target
-        .splice(-1, 0, data[type]);
+      if (data[type]) {
+        target.splice(-1, 0, data[type]);
+      }
 
       target = target.join('/');
 

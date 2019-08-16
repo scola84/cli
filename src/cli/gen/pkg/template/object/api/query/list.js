@@ -13,10 +13,10 @@ export function buildList() {
       ),
       s.where(
         s.search().columns(
-          /* #search */
+          /*#each search*/
           '/*name*/'
           /*comma*/
-          /* /search */
+          /*/each*/
         )
         .search((request) => {
           return request.url.query.search;
@@ -24,18 +24,18 @@ export function buildList() {
       ),
       s.orderBy(
         s.order().columns(
-          /* #order */
+          /*#each order*/
           '/*name*/'
           /*comma*/
-          /* /order */
+          /*/each*/
         )
         .default(
-          /* #default */
+          /*#each default*/
           s['/*direction*/'](
             s.id('/*name*/')
           )
           /*comma*/
-          /* /default */
+          /*/each*/
         )
         .order((request) => {
           return request.url.query.order;

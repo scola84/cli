@@ -30,10 +30,10 @@ export function buildList() {
             })
           ),
           s.search().columns(
-            /* #search */
+            /*#each search*/
             '/*link*/./*name*/'
             /*comma*/
-            /* /search */
+            /*/each*/
           )
           .search((request) => {
             return request.url.query.search;
@@ -42,18 +42,18 @@ export function buildList() {
       ),
       s.orderBy(
         s.order().columns(
-          /* #order */
+          /*#each order*/
           '/*link*/./*name*/'
           /*comma*/
-          /* /order */
+          /*/each*/
         )
         .default(
-          /* #default */
+          /*#each default*/
           s['/*direction*/'](
             s.id('/*link*/./*name*/')
           )
           /*comma*/
-          /* /default */
+          /*/each*/
         )
         .order((request) => {
           return request.url.query.order;

@@ -8,10 +8,12 @@ import {
 
 import findup from 'find-up';
 import fs from 'fs-extra';
+import Handlebars from 'handlebars';
+import readDir from 'recursive-readdir';
 
 import {
-  generateAcg,
-  generateCustom,
+  generateContent,
+  generateDir,
   mergeLink,
   mergeObject
 } from './pkg/helper';
@@ -36,11 +38,65 @@ export function pkg() {
     }
   });
 
-  const customGenerator = new Worker({
+  const handleBars = new Worker({
     act(box, data, callback) {
-      generateCustom(box, data, () => {
+      Handlebars.registerHelper('comma', (context) => {
+        return (
+          context.hash.always !== true &&
+          context.data.last === true && (
+            context.data._parent.last === true ||
+            typeof context.data._parent.last === 'undefined'
+          )
+        ) ? '' : ',';
+      });
+
+      const sdir = __dirname.slice(0, -5) +
+        '/src/cli/gen/pkg/template/partial/';
+
+      readDir(sdir, (error, files) => {
+        files.forEach((file) => {
+          Handlebars.registerPartial(
+            file.split('/').pop().slice(0, -3),
+            (context) => {
+              let content = String(fs.readFileSync(file))
+                .split(/\r?\n/);
+
+              let begin = 0;
+              let end = void 0;
+
+              for (let i = 0; i < content.length; i += 1) {
+                if (content[i].slice(0, 6) === 'export') {
+                  begin = i + 1;
+                  end = -2;
+                  break;
+                }
+              }
+
+              content = content
+                .slice(begin, end)
+                .join('\n');
+
+              if (begin) {
+                content = content.split('');
+                content.splice(content.lastIndexOf(';'), 1);
+                content = content.join('');
+              }
+
+              return generateContent(content, context);
+            }
+          );
+        });
+
         this.pass(box, data, callback);
       });
+    }
+  });
+
+  const customGenerator = new Worker({
+    act(box, data, callback) {
+      generateDir(box, { data }, () => {
+        this.pass(box, data, callback);
+      }, 'master');
     }
   });
 
@@ -49,7 +105,7 @@ export function pkg() {
       return typeof data.link !== 'undefined';
     },
     act(box, data, callback) {
-      generateAcg(box, data, () => {
+      generateDir(box, data, () => {
         this.pass(box, data, callback);
       }, 'link');
     }
@@ -60,7 +116,7 @@ export function pkg() {
       return typeof data.link === 'undefined';
     },
     act(box, data, callback) {
-      generateAcg(box, data, () => {
+      generateDir(box, data, () => {
         this.pass(box, data, callback);
       }, 'object');
     }
@@ -140,6 +196,7 @@ export function pkg() {
   query.postgresql(postgresqlLinkSelector, (box, data) => `${data.link}`);
 
   optionsFinder
+    .connect(handleBars)
     .connect(mysqlObjectSelector)
     .connect(postgresqlObjectSelector)
     .connect(customGenerator)

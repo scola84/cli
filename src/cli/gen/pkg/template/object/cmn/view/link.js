@@ -1,6 +1,6 @@
 export function buildLinkCore(v) {
   return v.main(
-    /* #links */
+    /*#each links*/
     v.getList().name('/*object*/', '/*link*/').append(
       v.group(
         v.title(
@@ -60,6 +60,6 @@ export function buildLinkCore(v) {
       )
     )
     /*comma*/
-    /* /links */
+    /*/each*/
   );
 }

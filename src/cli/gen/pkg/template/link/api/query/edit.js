@@ -18,7 +18,8 @@ export function buildEdit() {
             return data['/*link*/_id'];
           })
         )
-        /* #columns */
+        /*#each groups*/
+        /*#each fields*/
         ,
         s.eq(
           s.id('/*name*/'),
@@ -26,7 +27,8 @@ export function buildEdit() {
             return data['/*name*/'];
           })
         )
-        /* /columns */
+        /*/each*/
+        /*/each*/
       ),
       s.where(
         s.and(

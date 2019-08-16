@@ -1,3 +1,3 @@
-/* #items */
+/*#each data*/
 export * from './/*name*/';
-/* /items */
+/*/each*/

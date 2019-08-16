@@ -15,10 +15,12 @@ export function buildAdd() {
       s.id(
         '/*object*/_id',
         '/*link*/_id'
-        /* #columns */
+        /*#each groups*/
+        /*#each fields*/
         ,
         '/*name*/'
-        /* /columns */
+        /*/each*/
+        /*/each*/
       ).parens(),
       s.values(
         s.value((request) => {
@@ -27,12 +29,12 @@ export function buildAdd() {
         s.value((request, data) => {
           return data['/*link*/_id'];
         })
-        /*#columns*/
+        /*#each fields*/
         ,
         s.value((request, data) => {
           return data['/*name*/'];
         })
-        /*/columns*/
+        /*/each*/
       )
     )
   );

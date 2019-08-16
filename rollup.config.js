@@ -10,6 +10,7 @@ const external = [
   'find-up',
   'fs',
   'fs-extra',
+  'handlebars',
   'qs',
   'recursive-readdir',
   'source-map-support/register'

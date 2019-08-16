@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import beautify from 'js-beautify';
-import Mustache from 'mustache';
+import { generateContent } from './content';
 
 export function generateFile(box, data, source, target) {
   const header = '/* provisioned by scola */';
@@ -19,19 +19,7 @@ export function generateFile(box, data, source, target) {
 
   let sourceContent = String(fs.readFileSync(source));
 
-  sourceContent = sourceContent
-    .replace(/\n\s+(\/\*comma\*\/)/g, '$1');
-
-  sourceContent = Mustache.render(
-    sourceContent,
-    data,
-    ({}),
-    ['/*', '*/']
-  );
-
-  sourceContent = sourceContent
-    .replace(/\['(\w+)'\]/g, '.$1');
-
+  sourceContent = generateContent(sourceContent, data);
   sourceContent = header + '\n\n' + sourceContent;
   sourceContent = beautify.js(sourceContent, box.beautify);
 
