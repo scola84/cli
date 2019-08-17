@@ -61,6 +61,18 @@ export function buildList() {
                   v.label(
                     v.anchor().class('l1').text(
                       v.print().format('/*object*/.list.item.l1')
+                    ),
+                    v.div().class('l2').text(
+                      v.print().format('/*object*/.list.item.l2')
+                    ),
+                    v.div().class('l3').text(
+                      v.print().format('/*object*/.list.item.l3')
+                    ),
+                    v.div().class('l4').text(
+                      v.print().format('/*object*/.list.item.l4')
+                    ),
+                    v.div().class('l5').text(
+                      v.print().format('/*object*/.list.item.l5')
                     )
                   )
                 )
