@@ -1,5 +1,5 @@
 import { ViewBuilder } from '@scola/dom';
-import { buildAside } from '../../../cmn/view//*object*//aside';
+import { buildAside } from '../../../cmn/view//*object*//link/aside';
 import { buildLinkCore } from '../../../cmn/view//*object*//link';
 
 export function buildLink() {

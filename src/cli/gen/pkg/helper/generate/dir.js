@@ -16,8 +16,12 @@ export function generateDir(box, data, callback, type) {
           .replace(sdir, tdir)
           .split('/');
 
+        const section = ['api', 'cmn', 'gui'].find((sct) => {
+          return target.indexOf(sct) > -1;
+        });
+
         if (data[type]) {
-          target.splice(-1, 0, data[type]);
+          target.splice(target.indexOf(section) + 2, 0, data[type]);
         }
 
         target = target.join('/');

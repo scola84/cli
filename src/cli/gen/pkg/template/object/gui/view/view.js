@@ -1,5 +1,5 @@
 import { ViewBuilder } from '@scola/dom';
-import { buildAside } from '../../../cmn/view//*object*//aside';
+import { buildAside } from '../../../cmn/view//*object*//view/aside';
 import { buildViewCore } from '../../../cmn/view//*object*//view';
 
 export function buildView() {
