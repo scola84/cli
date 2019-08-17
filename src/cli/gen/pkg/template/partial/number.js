@@ -20,8 +20,13 @@ export function number(v) {
       required: 'required'
     })
     /*/if*/
+    /*#if options.clean*/
+    .clean(
+      fieldset['/*name*/'].clean
+    )
+    /*/if*/
     /*#if options.validate*/
-    .custom(
+    .validate(
       fieldset['/*name*/'].validate
     )
     /*/if*/
