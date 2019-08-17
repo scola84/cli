@@ -1,6 +1,6 @@
 import { SqlBuilder } from '@scola/doc';
 import { ViewBuilder } from '@scola/dom';
-import { buildInput } from '../../../cmn/view//*link*//input';
+import { buildFieldset } from '../../../cmn/view//*link*//fieldset';
 
 export function buildEdit() {
   const s = new SqlBuilder();
@@ -51,7 +51,7 @@ export function buildEdit() {
 
   v.build(
     v.validate(
-      buildInput(v)
+      buildFieldset(v)
     ).err(
       v.throw()
     )

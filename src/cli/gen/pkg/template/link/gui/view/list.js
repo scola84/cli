@@ -1,6 +1,6 @@
 import { ViewBuilder } from '@scola/dom';
-import { buildAside } from '../../../../cmn/src/view//*link*//aside';
-import { buildListCore } from '../../../../cmn/src/view//*link*//list';
+import { buildAside } from '../../../cmn/view//*link*//aside';
+import { buildListCore } from '../../../cmn/view//*link*//list';
 
 export function buildList() {
   const v = new ViewBuilder();

@@ -1,6 +1,6 @@
 import { ViewBuilder } from '@scola/dom';
-import { buildFieldset } from '../../../../cmn/src/view//*link*//fieldset';
-import { buildNew } from '../../../../cmn/src/view//*link*//new';
+import { buildFieldset } from '../../../cmn/view//*link*//fieldset';
+import { buildNew } from '../../../cmn/view//*link*//new';
 
 export function buildAdd() {
   const v = new ViewBuilder();
@@ -51,7 +51,7 @@ export function buildAdd() {
             v.validate(
               v.selector('.body form')
             ).act(
-              v.postObject().name('inverter', '/*link*/')
+              v.postObject().name('/*object*/', '/*link*/')
             ).err(
               v.selector('.body .hint')
             )

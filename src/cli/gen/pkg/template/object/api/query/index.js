@@ -1,21 +1,16 @@
 import { buildAdd } from './add';
 import { buildDelete } from './delete';
 import { buildEdit } from './edit';
-import { buildLink } from './link';
 import { buildList } from './list';
 import { buildView } from './view';
 
-export function query({ router, resolver }) {
+export function _L_object_R_({ router, resolver }) {
   router
     .connect('GET ^/api//*object*/$', buildList())
     .connect(resolver);
 
   router
     .connect('GET ^/api//*object*//(?</*object*/_id>\\d+)$', buildView())
-    .connect(resolver);
-
-  router
-    .connect('GET ^/api//*object*//(?</*object*/_id>\\d+)/link$', buildLink())
     .connect(resolver);
 
   router

@@ -4,7 +4,7 @@ import { buildEdit } from './edit';
 import { buildList } from './list';
 import { buildView } from './view';
 
-export function query({ router, resolver }) {
+export function _L_link_R_({ router, resolver }) {
   router
     .connect('GET ^/api//*object*//(?</*object*/_id>\\d+)//*link*/$', buildList())
     .connect(resolver);

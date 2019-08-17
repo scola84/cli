@@ -5,6 +5,8 @@ export function generateContent(content, data) {
     .replace(/\n\s+(\/\*comma)/g, '$1')
     .replace(/\{/g, '<<<')
     .replace(/\}/g, '>>>')
+    .replace(/_L_/g, '{{')
+    .replace(/_R_/g, '}}')
     .replace(/\/\*/g, '{{')
     .replace(/\*\//g, '}}');
 
