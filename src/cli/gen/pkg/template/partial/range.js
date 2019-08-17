@@ -1,13 +1,18 @@
 import fieldset from './fieldset';
 
-export function email(v) {
-  v.email()
+export function range(v) {
+  v.range()
     .attributes({
       name: '/*name*/'
     })
-    /*#if maxlength*/
+    /*#if max*/
     .attributes({
-      maxlength: '/*maxlength*/'
+      max: fieldset['/*name*/'].max
+    })
+    /*/if*/
+    /*#if options.min*/
+    .attributes({
+      min: fieldset['/*name*/'].min
     })
     /*/if*/
     /*#if required*/

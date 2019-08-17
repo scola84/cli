@@ -1,7 +1,7 @@
 import fieldset from './fieldset';
 
-export function email(v) {
-  v.email()
+export function textarea(v) {
+  v.textarea()
     .attributes({
       name: '/*name*/'
     })

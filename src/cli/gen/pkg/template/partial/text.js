@@ -15,13 +15,9 @@ export function text(v) {
       required: 'required'
     })
     /*/if*/
-    /*#if options.custom*/
+    /*#if options.validate*/
     .custom(
       fieldset['/*name*/'].validate
-    )
-    /*else*/
-    .custom(
-      () => true
     )
     /*/if*/
     .properties({

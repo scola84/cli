@@ -1,13 +1,18 @@
 import fieldset from './fieldset';
 
-export function email(v) {
-  v.email()
+export function file(v) {
+  v.file()
     .attributes({
       name: '/*name*/'
     })
-    /*#if maxlength*/
+    /*#if options.accept*/
     .attributes({
-      maxlength: '/*maxlength*/'
+      accept: fieldset['/*name*/'].accept
+    })
+    /*/if*/
+    /*#if options.maxsize*/
+    .attributes({
+      maxsize: fieldset['/*name*/'].maxsize
     })
     /*/if*/
     /*#if required*/

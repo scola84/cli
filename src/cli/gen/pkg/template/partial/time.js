@@ -1,23 +1,23 @@
 import fieldset from './fieldset';
 
-export function email(v) {
-  v.email()
+export function time(v) {
+  v.time()
     .attributes({
       name: '/*name*/'
     })
-    /*#if maxlength*/
-    .attributes({
-      maxlength: '/*maxlength*/'
-    })
-    /*/if*/
     /*#if required*/
     .attributes({
       required: 'required'
     })
     /*/if*/
-    /*#if options.validate*/
-    .custom(
-      fieldset['/*name*/'].validate
+    /*#if options.from*/
+    .formatFrom(
+      fieldset['/*name*/'].from
+    )
+    /*/if*/
+    /*#if options.to*/
+    .formatTo(
+      fieldset['/*name*/'].to
     )
     /*/if*/
     .properties({

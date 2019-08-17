@@ -1,7 +1,7 @@
 import fieldset from './fieldset';
 
-export function email(v) {
-  v.email()
+export function password(v) {
+  v.password()
     .attributes({
       name: '/*name*/'
     })

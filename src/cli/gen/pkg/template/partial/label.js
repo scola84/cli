@@ -1,4 +1,4 @@
-export default function(v) {
+export function label(v) {
   v.label(
     v.div()
     .class('l1')
