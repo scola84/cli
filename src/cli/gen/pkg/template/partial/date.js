@@ -5,6 +5,16 @@ export function date(v) {
     .attributes({
       name: '/*name*/'
     })
+    /*#if max*/
+    .attributes({
+      max: fieldset['/*name*/'].max
+    })
+    /*/if*/
+    /*#if options.min*/
+    .attributes({
+      min: fieldset['/*name*/'].min
+    })
+    /*/if*/
     /*#if required*/
     .attributes({
       required: 'required'
