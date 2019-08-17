@@ -46,7 +46,7 @@ export function custom() {
       try {
         execSync(command, { cwd: data, stdio: 'inherit' });
       } catch (error) {
-        this.log('fail', box, data, callback, error.message);
+        data = error;
       }
 
       console.log();
