@@ -1,4 +1,4 @@
-/*#if custom.length */
+/*#if custom */
 /*> custom*/
 /*/if*/
 

@@ -2,9 +2,9 @@ import fs from 'fs-extra';
 import beautify from 'js-beautify';
 import { generateContent } from './content';
 
-export function generateFile(box, data, source, target) {
-  const header = '/* provisioned by scola */';
+const header = '/* provisioned by scola */';
 
+export function generateFile(box, data, source, target) {
   let targetContent = null;
 
   try {

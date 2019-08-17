@@ -1,5 +1,6 @@
 import readDir from 'recursive-readdir';
 import { generateFile } from './file';
+import { generateOptions } from './options';
 
 export function generateDir(box, data, callback, type) {
   const sdir = __dirname.slice(0, -5) +
@@ -8,21 +9,23 @@ export function generateDir(box, data, callback, type) {
 
   const tdir = process.cwd();
 
-  readDir(sdir, (error, files) => {
-    files.forEach((source) => {
-      let target = source
-        .replace(sdir, tdir)
-        .split('/');
+  generateOptions(box, data, tdir, () => {
+    readDir(sdir, (error, files) => {
+      files.forEach((source) => {
+        let target = source
+          .replace(sdir, tdir)
+          .split('/');
 
-      if (data[type]) {
-        target.splice(-1, 0, data[type]);
-      }
+        if (data[type]) {
+          target.splice(-1, 0, data[type]);
+        }
 
-      target = target.join('/');
+        target = target.join('/');
 
-      generateFile(box, data, source, target);
+        generateFile(box, data, source, target);
+      });
+
+      callback();
     });
-
-    callback();
   });
 }

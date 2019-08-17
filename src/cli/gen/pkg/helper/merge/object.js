@@ -36,8 +36,8 @@ export function mergeObject(data) {
       links,
       object,
       table,
+      custom: false,
       name: link || object,
-      custom: [],
       default: [],
       order: [],
       search: []
@@ -45,12 +45,6 @@ export function mergeObject(data) {
 
     definition.groups.forEach((group) => {
       group.fields.forEach((field) => {
-        if (field.options.custom) {
-          definition.custom.push({
-            name: field.name
-          });
-        }
-
         if (field.options.default) {
           definition.default.push({
             name: field.name,
