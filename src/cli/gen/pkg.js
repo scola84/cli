@@ -8,6 +8,7 @@ import {
 
 import {
   generateDir,
+  generateReport,
   mergeLink,
   mergeObject,
   selectLink,
@@ -74,6 +75,15 @@ export function pkg() {
     }
   });
 
+  const reportGenerator = new Worker({
+    act(box, data, callback) {
+      generateReport(box, data, (error, report) => {
+        this.log('cli', box, data, report.join('\n'));
+        this.pass(box, data, callback);
+      });
+    }
+  });
+
   const mysqlObjectSelector = new SqlBuilder({
     decide(box) {
       return box.host.indexOf('mysql') === 0;
@@ -125,6 +135,7 @@ export function pkg() {
   });
 
   const unifier = new Unifier({
+    collect: true,
     name: 'table'
   });
 
@@ -145,7 +156,8 @@ export function pkg() {
     .connect(postgresqlLinkSelector)
     .connect(objectGenerator)
     .connect(linkGenerator)
-    .connect(unifier);
+    .connect(unifier)
+    .connect(reportGenerator);
 
-  return [optionsSetup, unifier];
+  return [optionsSetup, reportGenerator];
 }

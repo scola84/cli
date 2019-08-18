@@ -14,6 +14,7 @@ export function generateFile(box, data, source, target) {
   }
 
   if (targetContent.slice(0, header.length) !== header) {
+    box.unprovisioned.push(target.replace(process.cwd(), ''));
     return;
   }
 
@@ -22,6 +23,12 @@ export function generateFile(box, data, source, target) {
   sourceContent = generateContent(sourceContent, data);
   sourceContent = header + '\n\n' + sourceContent;
   sourceContent = beautify.js(sourceContent, box.beautify);
+
+  if (sourceContent === targetContent) {
+    box.unchanged.push(target.replace(process.cwd(), ''));
+  } else {
+    box.changed.push(target.replace(process.cwd(), ''));
+  }
 
   fs.ensureFileSync(target);
   fs.writeFileSync(target, sourceContent);

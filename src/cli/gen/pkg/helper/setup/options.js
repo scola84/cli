@@ -9,5 +9,9 @@ export function setupOptions(box, data, callback) {
     fs.readFileSync(options)
   ) : {};
 
+  box.changed = [];
+  box.unchanged = [];
+  box.unprovisioned = [];
+
   callback();
 }

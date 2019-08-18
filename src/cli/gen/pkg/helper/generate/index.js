@@ -3,3 +3,4 @@ export * from './dir';
 export * from './file';
 export * from './options';
 export * from './partial';
+export * from './report';

@@ -41,7 +41,7 @@ export function custom() {
     act(box, data, callback) {
       const command = resolve(box.command);
 
-      this.log('cmd', box, data, callback, `${data}$ ${command}`);
+      this.log('cli', box, data, `${data}$ ${command}`);
 
       try {
         execSync(command, { cwd: data, stdio: 'inherit' });

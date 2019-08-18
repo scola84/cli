@@ -32,16 +32,14 @@ const router = new Router({
 function action(options) {
   options.name = options._name;
 
-  Worker.setLog((type, worker, box, data, callback, line) => {
-    if (type === 'fail' && data.logged !== true) {
-      console.log(data);
-      data.logged = true;
-    }
-
-    if (type === 'cmd' && options.log.indexOf(type) > -1) {
+  console.out = (type, worker, box, data, line) => {
+    if (type === 'cli') {
       console.log(line);
+    } else if (type === 'fail' && !data.logged) {
+      data.logged = true;
+      console.error(data);
     }
-  });
+  };
 
   beginner
     .connect(router
