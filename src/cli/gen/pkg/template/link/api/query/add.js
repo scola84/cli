@@ -29,11 +29,13 @@ export function buildAdd() {
         s.value((request, data) => {
           return data['/*link*/_id'];
         })
+        /*#each groups*/
         /*#each fields*/
         ,
         s.value((request, data) => {
           return data['/*name*/'];
         })
+        /*/each*/
         /*/each*/
       )
     )
