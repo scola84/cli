@@ -8,8 +8,8 @@
   "main": "./dist/cli.cjs.js",
   "module": "./index.js",
   "devDependencies": {
-    "rollup": "^1.17.0",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup": "^1.19.4",
+    "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
@@ -19,7 +19,7 @@
     "handlebars": "^4.1.2",
     "js-beautify": "^1.10.2",
     "lodash-es": "^4.17.15",
-    "qs": "^6.7.0",
+    "qs": "^6.8.0",
     "recursive-readdir": "^2.2.2",
     "source-map-support": "^0.5.13",
     "xregexp": "^4.2.4"
