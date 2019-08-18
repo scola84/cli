@@ -12,7 +12,7 @@ export function buildDelete() {
       s.where(
         s.and(
           s.eq(
-            s.id('/*object*/id'),
+            s.id('/*object*/_id'),
             s.value((request) => {
               return request.params['/*object*/_id'];
             })
