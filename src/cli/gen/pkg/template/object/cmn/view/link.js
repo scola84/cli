@@ -1,7 +1,7 @@
 export function buildLinkCore(v) {
   return v.main(
     /*#each links*/
-    v.getList().name('/*object*/', '/*link*/').append(
+    v.getList().name('/*object*/', '/*link*/').count(5).append(
       v.group(
         v.title(
           v.div().text(
@@ -41,7 +41,7 @@ export function buildLinkCore(v) {
               v.route().view('view-/*link*/:{/*link*/_id}@main:rtl&mem')
             ),
             v.click().allow((box, data) => {
-              return data.length > 1;
+              return data.length === 5;
             }).append(
               v.item().class('click icon').append(
                 v.icon().class('ion-ios-list'),
