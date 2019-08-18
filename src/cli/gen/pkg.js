@@ -84,16 +84,6 @@ export function pkg() {
     }
   });
 
-  const mysqlObjectSelector = new SqlBuilder({
-    decide(box) {
-      return box.host.indexOf('mysql') === 0;
-    },
-    host: 'mysql',
-    merge(box, data, { result }) {
-      return mergeObject(result);
-    }
-  });
-
   const mysqlLinkSelector = new SqlBuilder({
     decide(box, data) {
       return (
@@ -107,11 +97,11 @@ export function pkg() {
     }
   });
 
-  const postgresqlObjectSelector = new SqlBuilder({
+  const mysqlObjectSelector = new SqlBuilder({
     decide(box) {
-      return box.host.indexOf('postgres') === 0;
+      return box.host.indexOf('mysql') === 0;
     },
-    host: 'postgres',
+    host: 'mysql',
     merge(box, data, { result }) {
       return mergeObject(result);
     }
@@ -127,6 +117,16 @@ export function pkg() {
     host: 'postgres',
     merge(box, data, { result }) {
       return mergeLink(data, result);
+    }
+  });
+
+  const postgresqlObjectSelector = new SqlBuilder({
+    decide(box) {
+      return box.host.indexOf('postgres') === 0;
+    },
+    host: 'postgres',
+    merge(box, data, { result }) {
+      return mergeObject(result);
     }
   });
 
