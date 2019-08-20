@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import trim from 'lodash-es/trim';
 import recursive from 'recursive-readdir';
 
-const skip = [
+const builtins = [
   '..',
   '.',
   'child_process',
@@ -57,7 +57,7 @@ function install(files, options = {}) {
       module = module && scope.slice(0, 1) === '@' ?
         ([scope, module].join('/')) : scope;
 
-      if (skip.indexOf(module) === -1) {
+      if (builtins.indexOf(module) === -1) {
         if (module !== self) {
           modules.add(module);
         }
@@ -76,9 +76,10 @@ function install(files, options = {}) {
 
   const execOptions = { cwd: process.cwd(), stdio: 'inherit' };
   const names = Array.from(modules).sort();
+  const skip = options.skip || '';
 
   names.forEach((name) => {
-    if (options.skip.indexOf(name) === -1) {
+    if (skip.indexOf(name) === -1) {
       execSync(`npm install ${name}`, execOptions);
     }
   });
