@@ -63,6 +63,7 @@ commander
   .option('-d, --directory <directory>', 'The directory filter')
   .option('-l, --log <log>', 'The log filter', 'fail,cmd')
   .option('-r, --recursive', 'Whether to execute the command recursively')
+  .option('-s, --skip <skip>', 'Items to skip')
   .action(action);
 
 commander

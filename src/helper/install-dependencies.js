@@ -22,7 +22,7 @@ const skip = [
   'util'
 ];
 
-export function installDependencies(dir, reset, callback) {
+export function installDependencies(dir, options, callback) {
   recursive(process.cwd() + dir, (error, files) => {
     if (error) {
       callback(error.code === 'ENOENT' ? null : error);
@@ -30,7 +30,7 @@ export function installDependencies(dir, reset, callback) {
     }
 
     try {
-      install(files, reset);
+      install(files, options);
       callback();
     } catch (installError) {
       callback(installError);
@@ -38,7 +38,7 @@ export function installDependencies(dir, reset, callback) {
   });
 }
 
-function install(files, reset) {
+function install(files, options = {}) {
   const modules = new Set();
   const self = process.cwd().split('/').slice(-2).join('/');
 
@@ -68,19 +68,20 @@ function install(files, reset) {
   const data = readFileSync(process.cwd() + '/package.json');
   const json = JSON.parse(String(data));
 
-  if (reset === true) {
+  if (options.reset === true) {
     delete json.dependencies;
   }
 
   writeFileSync(process.cwd() + '/package.json', JSON.stringify(json));
 
-  const options = { cwd: process.cwd(), stdio: 'inherit' };
+  const execOptions = { cwd: process.cwd(), stdio: 'inherit' };
   const names = Array.from(modules).sort();
 
   names.forEach((name) => {
-    execSync(`npm install ${name}`, options);
+    if (options.skip.indexOf(name) === -1) {
+      execSync(`npm install ${name}`, execOptions);
+    }
   });
 
-  execSync('rm -rf node_modules', options);
-  execSync('rm package-lock.json', options);
+  execSync('npm install', execOptions);
 }

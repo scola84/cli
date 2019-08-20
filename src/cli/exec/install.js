@@ -4,7 +4,12 @@ import { Worker } from '@scola/worker';
 export function install() {
   return new Worker({
     act(box, data, callback) {
-      installDependencies('/src', true, (error) => {
+      const options = {
+        reset: true,
+        skip: box.skip
+      };
+
+      installDependencies('/src', options, (error) => {
         if (error) {
           this.fail(box, error, callback);
         } else {

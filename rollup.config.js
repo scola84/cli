@@ -4,6 +4,7 @@ import resolve from 'rollup-plugin-node-resolve';
 
 const external = [
   '@scola/doc',
+  '@scola/dom',
   '@scola/worker',
   'child_process',
   'commander',
@@ -11,6 +12,7 @@ const external = [
   'fs',
   'fs-extra',
   'handlebars',
+  'js-beautify',
   'qs',
   'recursive-readdir',
   'source-map-support/register'
