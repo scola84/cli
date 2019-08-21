@@ -37,7 +37,12 @@ function action(options) {
       console.log(line);
     } else if (type === 'fail' && !data.logged) {
       data.logged = true;
-      console.error(data);
+
+      if (data.message.slice(0, 5) === 'scola') {
+        console.error(data.message);
+      } else {
+        console.error(data);
+      }
     }
   };
 
@@ -61,7 +66,6 @@ commander
   .description('Execute commands')
   .option('-c, --command <command>', 'The command to be executed')
   .option('-d, --directory <directory>', 'The directory filter')
-  .option('-l, --log <log>', 'The log filter', 'fail,cmd')
   .option('-r, --recursive', 'Whether to execute the command recursively')
   .option('-s, --skip <skip>', 'Items to skip')
   .action(action);
@@ -69,9 +73,8 @@ commander
 commander
   .command('gen')
   .description('Generate code')
-  .option('-d, --database <database>', 'The database to generate code from')
+  .option('-c, --clean', 'Whether to cleanup provisioned files')
   .option('-h, --host <host>', 'The host of the database')
-  .option('-l, --log <log>', 'The log filter', 'fail,cmd')
   .option('-o, --object <object>', 'The object to generate code for')
   .option('-t, --type <type>', 'The type of code to be generated')
   .action(action);

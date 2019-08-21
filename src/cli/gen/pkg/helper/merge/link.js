@@ -3,6 +3,11 @@ import { mergeObject } from './object';
 export function mergeLink(data, result) {
   [result] = mergeObject(result);
 
+  if (typeof result === 'undefined') {
+    data.child = data.link;
+    return data;
+  }
+
   data.search = result.search.map((field) => {
     field.link = data.link;
     return field;

@@ -20,7 +20,7 @@ export function buildAdd() {
           ),
           v.center(
             v.title().text(
-              v.print().format('/*link*/.title.1')
+              v.print().format('/*object*/.link./*link*/.title.1')
             )
           ),
           v.right(

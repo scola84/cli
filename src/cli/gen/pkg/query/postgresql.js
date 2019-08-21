@@ -100,6 +100,14 @@ export function postgresql(s, name) {
           'columns.table_name',
           s.value(name)
         )
+      ),
+      s.orderBy(
+        s.asc(
+          s.id('columns.table_name')
+        ),
+        s.asc(
+          s.id('columns.ordinal_position')
+        )
       )
     )
   );

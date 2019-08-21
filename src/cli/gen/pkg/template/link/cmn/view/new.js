@@ -28,6 +28,18 @@ export function buildNew(v) {
             v.label(
               v.div().class('l1').text(
                 v.print().format('/*object*/.link./*link*/.list.item.l1')
+              ),
+              v.div().class('l2').text(
+                v.print().format('/*object*/.link./*link*/.list.item.l2')
+              ),
+              v.div().class('l3').text(
+                v.print().format('/*object*/.link./*link*/.list.item.l3')
+              ),
+              v.div().class('l4').text(
+                v.print().format('/*object*/.link./*link*/.list.item.l4')
+              ),
+              v.div().class('l5').text(
+                v.print().format('/*object*/.link./*link*/.list.item.l5')
               )
             )
           )

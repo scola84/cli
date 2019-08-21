@@ -6,18 +6,37 @@ export function mergeObject(data) {
   const links = [];
 
   return Object.keys(data).map((table) => {
-    const [object, link] = table.split('_');
+    const [
+      object,
+      link
+    ] = table.split('_');
+
+    let child = false;
+
+    const fields = data[table]
+      .filter((field) => {
+        if (field.primary) {
+          return false;
+        }
+
+        if (field.name.match(/_id/)) {
+          child = true;
+          return false;
+        }
+
+        return true;
+      })
+      .map((field) => {
+        return mergeField(object, link, field);
+      });
 
     if (link) {
       links.push({
+        child,
         link,
         object
       });
     }
-
-    const fields = data[table]
-      .filter((field) => !field.primary)
-      .map((field) => mergeField(object, link, field));
 
     let groups = groupBy(fields, 'group');
 
@@ -36,6 +55,7 @@ export function mergeObject(data) {
       links,
       object,
       table,
+      child: null,
       custom: false,
       name: link || object,
       default: [],

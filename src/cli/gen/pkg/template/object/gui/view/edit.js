@@ -32,30 +32,30 @@ export function buildEdit() {
         v.progress()
       ),
       v.body(
-        v.getObject().name('/*object*/').append(
-          v.submit(
-            v.form(
+        v.submit(
+          v.form(
+            v.getObject().name('/*object*/').append(
               buildFieldset(v)
             )
+          )
+        ).act(
+          v.validate(
+            v.selector('.body form')
           ).act(
-            v.validate(
-              v.selector('.body form')
-            ).act(
-              v.putObject().name('/*object*/')
-            ).err(
-              v.selector('.body .hint')
-            )
-          ),
-          v.group(
-            v.click(
-              v.item(
-                v.button().class('delete').text(
-                  v.print().format('button.delete')
-                )
+            v.putObject().name('/*object*/')
+          ).err(
+            v.selector('.body .hint')
+          )
+        ),
+        v.group(
+          v.click(
+            v.item(
+              v.button().class('delete').text(
+                v.print().format('button.delete')
               )
-            ).act(
-              v.deleteObject().name('/*object*/')
             )
+          ).act(
+            v.deleteObject().name('/*object*/')
           )
         )
       )

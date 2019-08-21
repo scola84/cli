@@ -7,6 +7,7 @@ import {
 } from '@scola/worker';
 
 import {
+  generateClean,
   generateDir,
   generateReport,
   mergeLink,
@@ -45,7 +46,18 @@ export function pkg() {
     }
   });
 
-  const customGenerator = new Worker({
+  const cleanGenerator = new Worker({
+    decide(box) {
+      return box.clean === true;
+    },
+    act(box, data, callback) {
+      generateClean(() => {
+        this.pass(box, data, callback);
+      });
+    }
+  });
+
+  const masterGenerator = new Worker({
     act(box, data, callback) {
       generateDir(box, { data }, () => {
         this.pass(box, data, callback);
@@ -60,7 +72,7 @@ export function pkg() {
     act(box, data, callback) {
       generateDir(box, data, () => {
         this.pass(box, data, callback);
-      }, 'link');
+      }, data.child ? 'child' : 'link');
     }
   });
 
@@ -150,7 +162,8 @@ export function pkg() {
     .connect(sqlSetup)
     .connect(mysqlObjectSelector)
     .connect(postgresqlObjectSelector)
-    .connect(customGenerator)
+    .connect(cleanGenerator)
+    .connect(masterGenerator)
     .connect(slicer)
     .connect(mysqlLinkSelector)
     .connect(postgresqlLinkSelector)

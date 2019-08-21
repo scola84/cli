@@ -62,6 +62,14 @@ export function mysql(s, name) {
             s.value(name)
           )
         )
+      ),
+      s.orderBy(
+        s.asc(
+          s.id('columns.TABLE_NAME')
+        ),
+        s.asc(
+          s.id('column.ORDINAL_POSITION')
+        )
       )
     )
   );

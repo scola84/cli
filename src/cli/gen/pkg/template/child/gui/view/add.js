@@ -1,9 +1,7 @@
 import { ViewBuilder } from '@scola/dom';
-import { buildCurrent } from '../../../cmn/view//*link*//current';
 import { buildFieldset } from '../../../cmn/view//*link*//fieldset';
-import { buildNew } from '../../../cmn/view//*link*//new';
 
-export function buildEdit() {
+export function buildAdd() {
   const v = new ViewBuilder();
 
   v.build(
@@ -36,7 +34,7 @@ export function buildEdit() {
           )
         ).act(
           v.selector('.search'),
-          v.selector('.group.new .body')
+          v.selector('.new .body')
         ),
         v.message(),
         v.progress()
@@ -45,24 +43,20 @@ export function buildEdit() {
         v.body(
           v.submit(
             v.form(
-              v.getObject().name('/*object*/', '/*link*/').append(
-                buildFieldset(v),
-                buildCurrent(v)
-              ),
-              buildNew(v)
+              buildFieldset(v)
             )
           ).act(
             v.validate(
               v.selector('.body form')
             ).act(
-              v.putObject().name('/*object*/', '/*link*/')
+              v.postObject().name('/*object*/', '/*link*/')
             ).err(
               v.selector('.body .hint')
             )
           )
         )
       ).act(
-        v.selector('.group.new .body')
+        v.selector('.new .body')
       )
     )
   );
