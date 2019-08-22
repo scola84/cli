@@ -1,7 +1,7 @@
 import { mergeObject } from './object';
 
-export function mergeLink(data, result) {
-  [result] = mergeObject(result);
+export function mergeLink(box, data, result) {
+  [result] = mergeObject(box, result);
 
   if (typeof result === 'undefined') {
     return data;

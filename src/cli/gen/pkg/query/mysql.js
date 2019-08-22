@@ -1,4 +1,4 @@
-export function mysql(s, name) {
+export function mysql(s, schema, name) {
   s.build(
     s.query(
       s.select(
@@ -56,7 +56,11 @@ export function mysql(s, name) {
       ),
       s.from('information_schema.COLUMNS'),
       s.where(
-        s.eq(
+        s.and(
+          s.eq(
+            'COLUMNS.TABLE_SCHEMA',
+            s.value(schema)
+          ),
           s.like(
             'COLUMNS.TABLE_NAME',
             s.value(name)

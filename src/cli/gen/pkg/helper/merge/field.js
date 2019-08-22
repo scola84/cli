@@ -7,13 +7,16 @@ export function mergeField(object, link, field) {
   field.group = field.group || 'default';
   field.options = qs.parse(field.options);
 
-  field.values = (field.values || '').split(',').map((value) => {
-    return {
-      link,
-      object,
-      value
-    };
-  });
+  field.values = (field.values || '')
+    .split(',')
+    .filter((v) => v)
+    .map((value) => {
+      return {
+        link,
+        object,
+        value
+      };
+    });
 
   return field;
 }

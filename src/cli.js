@@ -65,7 +65,8 @@ commander
   .command('exec')
   .description('Execute commands')
   .option('-c, --command <command>', 'The command to be executed')
-  .option('-d, --directory <directory>', 'The directory filter')
+  .option('-d, --dry-run', 'Whether to dry run the command')
+  .option('-f, --filter <filter>', 'The directory filter')
   .option('-r, --recursive', 'Whether to execute the command recursively')
   .option('-s, --skip <skip>', 'Items to skip')
   .action(action);
@@ -73,7 +74,8 @@ commander
 commander
   .command('gen')
   .description('Generate code')
-  .option('-c, --clean', 'Whether to cleanup provisioned files')
+  .option('-c, --clean', 'Whether to clean provisioned files')
+  .option('-d, --dry-run', 'Whether to dry run the generation')
   .option('-h, --host <host>', 'The host of the database')
   .option('-o, --object <object>', 'The object to generate code for')
   .option('-t, --type <type>', 'The type of code to be generated')

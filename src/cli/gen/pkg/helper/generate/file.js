@@ -2,9 +2,10 @@ import fs from 'fs-extra';
 import beautify from 'js-beautify';
 import { generateContent } from './content';
 
-const header = '/* provisioned by scola */';
-
 export function generateFile(box, data, source, target) {
+  const header = '/* provisioned by scola */';
+  const name = target.replace(process.cwd(), '');
+
   let targetContent = null;
 
   try {
@@ -14,22 +15,30 @@ export function generateFile(box, data, source, target) {
   }
 
   if (targetContent.slice(0, header.length) !== header) {
-    box.unprovisioned.push(target.replace(process.cwd(), ''));
+    box.unprovisioned.push(name);
     return;
   }
 
   let sourceContent = String(fs.readFileSync(source));
 
-  sourceContent = generateContent(sourceContent, data);
+  try {
+    sourceContent = generateContent(sourceContent, data);
+  } catch (error) {
+    box.failed.push(name);
+    return;
+  }
+
   sourceContent = header + '\n\n' + sourceContent;
   sourceContent = beautify.js(sourceContent, box.beautify);
 
   if (sourceContent === targetContent) {
-    box.unchanged.push(target.replace(process.cwd(), ''));
+    box.unchanged.push(name);
   } else {
-    box.changed.push(target.replace(process.cwd(), ''));
+    box.changed.push(name);
   }
 
-  fs.ensureFileSync(target);
-  fs.writeFileSync(target, sourceContent);
+  if (Boolean(box.dryRun) === false) {
+    fs.ensureFileSync(target);
+    fs.writeFileSync(target, sourceContent);
+  }
 }

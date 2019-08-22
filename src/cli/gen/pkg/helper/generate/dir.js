@@ -11,9 +11,7 @@ export function generateDir(box, data, callback, base, name) {
 
   generateOptions(box, data, tdir, () => {
     readDir(sdir, (error, files) => {
-      files.sort();
-
-      files.forEach((source) => {
+      files.sort().forEach((source) => {
         let target = source
           .replace(sdir, tdir)
           .split('/');

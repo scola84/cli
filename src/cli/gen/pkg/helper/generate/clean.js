@@ -1,24 +1,35 @@
 import fs from 'fs-extra';
-import readDir from 'recursive-readdir';
 
-const header = '/* provisioned by scola */';
+function rmdir(box, path, prefix = path) {
+  const header = '/* provisioned by scola */';
+  const files = fs.readdirSync(path);
 
-export function generateClean(callback) {
-  readDir(process.cwd(), (error, files) => {
-    files.forEach((file) => {
+  files.sort().forEach((file) => {
+    file = `${path}/${file}`;
+
+    if (fs.lstatSync(file).isDirectory()) {
+      rmdir(box, file, prefix);
+    } else {
       const content = String(fs.readFileSync(file));
 
       if (content.slice(0, header.length) === header) {
-        fs.unlinkSync(file);
+        box.cleaned.push(file.replace(prefix, ''));
 
-        try {
-          fs.rmdirSync(file.split('/').slice(0, -1).join('/'));
-        } catch (e) {
-          //
+        if (Boolean(box.dryRun) === false) {
+          fs.unlinkSync(file);
         }
       }
-    });
-
-    callback();
+    }
   });
+
+  try {
+    fs.rmdirSync(path);
+  } catch (e) {
+    //
+  }
+}
+
+export function generateClean(box, callback) {
+  rmdir(box, process.cwd());
+  callback();
 }

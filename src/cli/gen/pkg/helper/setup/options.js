@@ -2,12 +2,22 @@ import findup from 'find-up';
 import fs from 'fs-extra';
 
 export function setupOptions(box, data, callback) {
+  box.changed = [];
+  box.cleaned = [];
+  box.failed = [];
+  box.unchanged = [];
+  box.unprovisioned = [];
+
   if ((box.host || '').match(/mysql|postgresql/) === null) {
-    throw new Error('scola: Provide a valid host using -h');
+    if (Boolean(box.clean) === false) {
+      throw new Error('scola: Provide a valid host using -h');
+    }
   }
 
   if (typeof box.object === 'undefined') {
-    throw new Error('scola: Provide a valid object name using -o');
+    if (Boolean(box.clean) === false) {
+      throw new Error('scola: Provide a valid object name using -o');
+    }
   }
 
   const options = findup
@@ -16,10 +26,6 @@ export function setupOptions(box, data, callback) {
   box.beautify = options ? JSON.parse(
     fs.readFileSync(options)
   ) : {};
-
-  box.changed = [];
-  box.unchanged = [];
-  box.unprovisioned = [];
 
   callback();
 }

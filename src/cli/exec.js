@@ -18,7 +18,7 @@ export function exec() {
 
   const slicer = new Slicer({
     filter(box) {
-      return collectDirectories(box.directory, box.recursive);
+      return collectDirectories(box.filter, box.recursive);
     }
   });
 

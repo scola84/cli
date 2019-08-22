@@ -1,15 +1,20 @@
 import groupBy from 'lodash-es/groupBy';
 import { mergeField } from './field';
 
-export function mergeObject(data) {
+export function mergeObject(box, data) {
   data = groupBy(data, 'table');
   const links = [];
 
   return Object.keys(data).map((table) => {
-    const [
+    let [
       object,
       link
     ] = table.split('_');
+
+    if (link === box.object) {
+      link = object;
+      object = box.object;
+    }
 
     let sides = 'two';
 
@@ -38,7 +43,9 @@ export function mergeObject(data) {
       });
     }
 
-    let groups = groupBy(fields, 'group');
+    let groups = groupBy(fields, (field) => {
+      return field.options.group || 'default';
+    });
 
     groups = Object.keys(groups).map((name) => {
       return {

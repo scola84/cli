@@ -2,28 +2,28 @@ import XRegExp from 'xregexp';
 import { readFileSync, readdirSync } from 'fs';
 import { createFilter } from './create-filter';
 
-export function collectDirectories(directory, recursive) {
-  if (directory && directory[0] === '@') {
-    return collectFromFile(directory);
+export function collectDirectories(filter, recursive) {
+  if (filter && filter[0] === '@') {
+    return collectFromFile(filter);
   }
 
   if (recursive === true) {
-    return collectFromDir(directory);
+    return collectFromDir(filter);
   }
 
   return [process.cwd()];
 }
 
-function collectFromFile(directory) {
+function collectFromFile(filter) {
   const splitter = new XRegExp('(?<!\\\\)@');
-  const [, file, filter = '.*'] = directory.split(splitter);
+  const [, file, regexp = '.*'] = filter.split(splitter);
 
   const data = String(readFileSync(file));
   let list = data.trim().split('\n\n');
 
   list = list.filter((item) => {
     item = item.split('\n').slice(1).join('\n');
-    return item.match(new XRegExp(filter)) !== null;
+    return item.match(new XRegExp(regexp)) !== null;
   });
 
   list = list.map((item) => {
@@ -34,9 +34,9 @@ function collectFromFile(directory) {
   return list;
 }
 
-function collectFromDir(directory) {
+function collectFromDir(filter) {
   const cwd = process.cwd();
-  const regexp = createFilter(directory);
+  const regexp = createFilter(filter);
 
   return readdirSync(cwd).filter((item) => {
     return item.match(regexp) !== null;

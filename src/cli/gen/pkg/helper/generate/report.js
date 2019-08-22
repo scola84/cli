@@ -12,6 +12,15 @@ export function generateReport(box, data, callback) {
   }
 
   lines.push('');
+  lines.push('Cleaned files:');
+
+  if (box.cleaned.length) {
+    lines.push('  ' + box.cleaned.join('\n  '));
+  } else {
+    lines.push('  <none>');
+  }
+
+  lines.push('');
   lines.push('Changed files:');
 
   if (box.changed.length) {
@@ -36,6 +45,27 @@ export function generateReport(box, data, callback) {
     lines.push('  ' + box.unprovisioned.join('\n  '));
   } else {
     lines.push('  <none>');
+  }
+
+  lines.push('');
+  lines.push('Failed files:');
+
+  if (box.failed.length) {
+    lines.push('  ' + box.failed.join('\n  '));
+  } else {
+    lines.push('  <none>');
+  }
+
+  lines.push('');
+
+  if (box.failed.length) {
+    lines.push('NOTE: there are failed files.');
+    lines.push('');
+  }
+
+  if (box.dryRun) {
+    lines.push('NOTE: this was a dry run.');
+    lines.push('');
   }
 
   callback(null, lines);

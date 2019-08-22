@@ -1,1 +1,3 @@
-export * from './nl_NL';
+/*#each data*/
+export * from './/*name*/';
+/*/each*/

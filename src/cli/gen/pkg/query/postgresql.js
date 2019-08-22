@@ -1,4 +1,4 @@
-export function postgresql(s, name) {
+export function postgresql(s, schema, name) {
   s.build(
     s.query(
       s.select(
@@ -96,9 +96,19 @@ export function postgresql(s, name) {
       ),
       s.from('information_schema.columns'),
       s.where(
-        s.like(
-          'columns.table_name',
-          s.value(name)
+        s.and(
+          s.eq(
+            'columns.table_catalog',
+            s.value(schema)
+          ),
+          s.eq(
+            'columns.table_schema',
+            s.value('public')
+          ),
+          s.like(
+            'columns.table_name',
+            s.value(name)
+          )
         )
       ),
       s.orderBy(

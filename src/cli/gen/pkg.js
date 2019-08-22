@@ -14,6 +14,7 @@ import {
   mergeObject,
   selectLink,
   selectObject,
+  selectSchema,
   setupHandlebars,
   setupOptions,
   setupSql
@@ -51,7 +52,7 @@ export function pkg() {
       return box.clean === true;
     },
     act(box, data, callback) {
-      generateClean(() => {
+      generateClean(box, () => {
         this.pass(box, data, callback);
       });
     }
@@ -69,6 +70,9 @@ export function pkg() {
   });
 
   const masterGenerator = new Worker({
+    decide(box, data) {
+      return data.length > 0;
+    },
     act(box, data, callback) {
       generateDir(box, { data }, () => {
         this.pass(box, data, callback);
@@ -105,7 +109,7 @@ export function pkg() {
     },
     host: 'mysql',
     merge(box, data, { result }) {
-      return mergeLink(data, result);
+      return mergeLink(box, data, result);
     }
   });
 
@@ -115,7 +119,7 @@ export function pkg() {
     },
     host: 'mysql',
     merge(box, data, { result }) {
-      return mergeObject(result);
+      return mergeObject(box, result);
     }
   });
 
@@ -128,7 +132,7 @@ export function pkg() {
     },
     host: 'postgres',
     merge(box, data, { result }) {
-      return mergeLink(data, result);
+      return mergeLink(box, data, result);
     }
   });
 
@@ -138,7 +142,7 @@ export function pkg() {
     },
     host: 'postgres',
     merge(box, data, { result }) {
-      return mergeObject(result);
+      return mergeObject(box, result);
     }
   });
 
@@ -151,11 +155,11 @@ export function pkg() {
     name: 'table'
   });
 
-  query.mysql(mysqlObjectSelector, selectObject);
-  query.postgresql(postgresqlObjectSelector, selectObject);
+  query.mysql(mysqlObjectSelector, selectSchema, selectObject);
+  query.postgresql(postgresqlObjectSelector, selectSchema, selectObject);
 
-  query.mysql(mysqlLinkSelector, selectLink);
-  query.postgresql(postgresqlLinkSelector, selectLink);
+  query.mysql(mysqlLinkSelector, selectSchema, selectLink);
+  query.postgresql(postgresqlLinkSelector, selectSchema, selectLink);
 
   optionsSetup
     .connect(handlebarsSetup)
@@ -164,7 +168,9 @@ export function pkg() {
     .connect(postgresqlObjectSelector)
     .connect(cleanGenerator)
     .connect(masterGenerator)
-    .connect(slicer)
+    .connect(
+      slicer.bypass(unifier)
+    )
     .connect(mysqlLinkSelector)
     .connect(postgresqlLinkSelector)
     .connect(objectGenerator)

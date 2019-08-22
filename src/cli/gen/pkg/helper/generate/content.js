@@ -15,7 +15,8 @@ export function generateContent(content, data) {
   content = content
     .replace(/<<</g, '{')
     .replace(/>>>/g, '}')
-    .replace(/\['(\w+)'\]/g, '.$1');
+    .replace(/(\w+)\['(\w+)'\]/g, '$1.$2')
+    .replace(/\['(\w+)'\]/g, '$1');
 
   return content;
 }
