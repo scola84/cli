@@ -34,6 +34,10 @@ export function generateOptions(box, data, tdir, callback) {
         });
       });
 
+      if (field === null) {
+        return;
+      }
+
       extractBody(file).content.forEach((value) => {
         value = value.replace(',', '').trim();
         field.options[value] = true;
