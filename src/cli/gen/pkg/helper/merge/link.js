@@ -4,7 +4,6 @@ export function mergeLink(data, result) {
   [result] = mergeObject(result);
 
   if (typeof result === 'undefined') {
-    data.child = data.link;
     return data;
   }
 

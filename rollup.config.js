@@ -12,6 +12,7 @@ const external = [
   'fs',
   'fs-extra',
   'handlebars',
+  'handlebars-helpers',
   'js-beautify',
   'qs',
   'recursive-readdir',

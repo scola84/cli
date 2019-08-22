@@ -1,11 +1,14 @@
 import Handlebars from 'handlebars';
+import handlebarsHelpers from 'handlebars-helpers';
 import readDir from 'recursive-readdir';
-import * as helper from '../../template/helper';
+import * as scolaHelpers from '../../template/helper';
 import { generatePartial } from '../generate';
 
 export function setupHandlebars(box, data, callback) {
-  Object.keys(helper).forEach((name) => {
-    Handlebars.registerHelper(name, helper[name]);
+  handlebarsHelpers.comparison();
+
+  Object.keys(scolaHelpers).forEach((name) => {
+    Handlebars.registerHelper(name, scolaHelpers[name]);
   });
 
   const sdir = __dirname.slice(0, -5) +

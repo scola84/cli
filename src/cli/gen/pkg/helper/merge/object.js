@@ -11,7 +11,7 @@ export function mergeObject(data) {
       link
     ] = table.split('_');
 
-    let child = false;
+    let sides = 'two';
 
     const fields = data[table]
       .filter((field) => {
@@ -20,7 +20,7 @@ export function mergeObject(data) {
         }
 
         if (field.name.match(/_id/)) {
-          child = true;
+          sides = 'one';
           return false;
         }
 
@@ -32,9 +32,9 @@ export function mergeObject(data) {
 
     if (link) {
       links.push({
-        child,
         link,
-        object
+        object,
+        sides
       });
     }
 
@@ -42,33 +42,33 @@ export function mergeObject(data) {
 
     groups = Object.keys(groups).map((name) => {
       return {
+        fields: groups[name],
         link,
         name,
-        object,
-        fields: groups[name]
+        object
       };
     });
 
     const definition = {
+      custom: false,
+      default: [],
       groups,
       link,
       links,
-      object,
-      table,
-      child: null,
-      custom: false,
       name: link || object,
-      default: [],
+      object,
       order: [],
-      search: []
+      search: [],
+      sides,
+      table
     };
 
     definition.groups.forEach((group) => {
       group.fields.forEach((field) => {
         if (field.options.default) {
           definition.default.push({
-            name: field.name,
-            direction: field.options.default
+            direction: field.options.default,
+            name: field.name
           });
         }
 

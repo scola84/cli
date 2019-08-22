@@ -2,10 +2,10 @@ import readDir from 'recursive-readdir';
 import { generateFile } from './file';
 import { generateOptions } from './options';
 
-export function generateDir(box, data, callback, type) {
+export function generateDir(box, data, callback, base, name) {
   const sdir = __dirname.slice(0, -5) +
     '/src/cli/gen/pkg/template/' +
-    type;
+    base;
 
   const tdir = process.cwd();
 
@@ -22,8 +22,8 @@ export function generateDir(box, data, callback, type) {
           return target.indexOf(sct) > -1;
         });
 
-        if (data[type]) {
-          target.splice(target.indexOf(section) + 2, 0, data[type]);
+        if (name) {
+          target.splice(target.indexOf(section) + 2, 0, name);
         }
 
         target = target.join('/');

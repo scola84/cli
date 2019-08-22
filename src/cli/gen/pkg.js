@@ -57,14 +57,6 @@ export function pkg() {
     }
   });
 
-  const masterGenerator = new Worker({
-    act(box, data, callback) {
-      generateDir(box, { data }, () => {
-        this.pass(box, data, callback);
-      }, 'master');
-    }
-  });
-
   const linkGenerator = new Worker({
     decide(box, data) {
       return typeof data.link !== 'undefined';
@@ -72,7 +64,15 @@ export function pkg() {
     act(box, data, callback) {
       generateDir(box, data, () => {
         this.pass(box, data, callback);
-      }, data.child ? 'child' : 'link');
+      }, `link/${data.sides}`, data.link);
+    }
+  });
+
+  const masterGenerator = new Worker({
+    act(box, data, callback) {
+      generateDir(box, { data }, () => {
+        this.pass(box, data, callback);
+      }, 'master');
     }
   });
 
@@ -83,7 +83,7 @@ export function pkg() {
     act(box, data, callback) {
       generateDir(box, data, () => {
         this.pass(box, data, callback);
-      }, 'object');
+      }, 'object', data.object);
     }
   });
 

@@ -22,11 +22,11 @@ export function buildLinkCore(v) {
           ).append(
             v.click(
               v.item()
-              /*#if child*/
-              .class('icon')
-              /*else*/
+              /*#eq sides compare="two"*/
               .class('click icon')
-              /*/if*/
+              /*else*/
+              .class('icon')
+              /*/eq*/
               .append(
                 v.click(
                   v.button().class('edit ion-ios-information-circle-outline')
@@ -35,11 +35,11 @@ export function buildLinkCore(v) {
                 ),
                 v.label(
                   v
-                  /*#if child*/
-                  .div()
-                  /*else*/
+                  /*#eq sides compare="two"*/
                   .anchor()
-                  /*/if*/
+                  /*else*/
+                  .div()
+                  /*/eq*/
                   .class('l1').text(
                     v.print().format('/*object*/.link./*link*/.list.item.l1')
                   ),
@@ -56,11 +56,10 @@ export function buildLinkCore(v) {
                     v.print().format('/*object*/.link./*link*/.list.item.l5')
                   )
                 )
-                /*#if child*/
-                /*else*/
+                /*#eq sides compare="two"*/
                 ,
                 v.icon().class('ion-ios-arrow-forward')
-                /*/if*/
+                /*/eq*/
               )
             ).act(
               v.route().view('view-/*link*/:{/*link*/_id}@main:rtl&mem')
