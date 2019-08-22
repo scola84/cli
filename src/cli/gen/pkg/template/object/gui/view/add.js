@@ -23,7 +23,7 @@ export function buildAdd() {
             )
           ),
           v.right(
-            v.button().form().text(
+            v.button().form('add').text(
               v.print().format('button.save')
             )
           )
@@ -33,7 +33,7 @@ export function buildAdd() {
       ),
       v.body(
         v.submit(
-          v.form(
+          v.form().id('add').append(
             buildFieldset(v)
           )
         ).act(

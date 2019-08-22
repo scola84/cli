@@ -23,7 +23,7 @@ export function buildEdit() {
             )
           ),
           v.right(
-            v.button().form().text(
+            v.button().form('edit').text(
               v.print().format('button.save')
             )
           )
@@ -33,7 +33,7 @@ export function buildEdit() {
       ),
       v.body(
         v.submit(
-          v.form(
+          v.form().id('edit').append(
             v.getObject().name('/*object*/', '/*link*/').append(
               buildFieldset(v)
             )
