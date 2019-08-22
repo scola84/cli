@@ -8,33 +8,33 @@ export function mysql(s, schema, name) {
         ),
         s.as(
           'COLUMNS.COLUMN_NAME',
-          'name'
+          s.id('name')
         ),
         s.as(
           'COLUMNS.DATA_TYPE',
-          'type'
+          s.id('type')
         ),
         s.as(
           s.eq(
             'COLUMNS.IS_NULLABLE',
             s.value('NO')
           ),
-          'required'
+          s.id('required')
         ),
         s.as(
           'COLUMNS.CHARACTER_MAXIMUM_LENGTH',
-          'maxlength'
+          s.id('maxlength')
         ),
         s.as(
           'COLUMNS.COLUMN_COMMENT',
-          'options'
+          s.id('options')
         ),
         s.as(
           s.eq(
             'COLUMNS.COLUMN_KEY',
             s.value('PRI')
           ),
-          'primary'
+          s.id('primary')
         ),
         s.as(
           s.replace(
@@ -69,10 +69,10 @@ export function mysql(s, schema, name) {
       ),
       s.orderBy(
         s.asc(
-          s.id('columns.TABLE_NAME')
+          s.id('COLUMNS.TABLE_NAME')
         ),
         s.asc(
-          s.id('column.ORDINAL_POSITION')
+          s.id('COLUMNS.ORDINAL_POSITION')
         )
       )
     )

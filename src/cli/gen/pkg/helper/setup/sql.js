@@ -9,7 +9,7 @@ export function setupSql(bx, data, callback) {
         dsn: box.host
       };
     },
-    postgres: (box) => {
+    postgresql: (box) => {
       return {
         dialect: 'postgresql',
         host: box.host,

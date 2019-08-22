@@ -4,26 +4,26 @@ export function postgresql(s, schema, name) {
       s.select(
         s.as(
           'columns.table_name',
-          'table'
+          s.id('table')
         ),
         s.as(
           'columns.column_name',
-          'name'
+          s.id('name')
         ),
         s.as(
           'columns.udt_name',
-          'type'
+          s.id('type')
         ),
         s.as(
           s.eq(
             'columns.is_nullable',
             s.value('NO')
           ),
-          'required'
+          s.id('required')
         ),
         s.as(
           'columns.character_maximum_length',
-          'maxlength'
+          s.id('maxlength')
         ),
         s.as(
           s.query(
@@ -38,7 +38,7 @@ export function postgresql(s, schema, name) {
               )
             )
           ).parens(),
-          'options'
+          s.id('options')
         ),
         s.as(
           s.query(
@@ -66,7 +66,7 @@ export function postgresql(s, schema, name) {
               )
             )
           ).parens(),
-          'primary'
+          s.id('primary')
         ),
         s.as(
           s.query(
@@ -91,7 +91,7 @@ export function postgresql(s, schema, name) {
               )
             )
           ).parens(),
-          'values'
+          s.id('values')
         )
       ),
       s.from('information_schema.columns'),

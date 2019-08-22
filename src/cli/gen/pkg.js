@@ -130,7 +130,7 @@ export function pkg() {
         typeof data.link !== 'undefined'
       );
     },
-    host: 'postgres',
+    host: 'postgresql',
     merge(box, data, { result }) {
       return mergeLink(box, data, result);
     }
@@ -138,9 +138,9 @@ export function pkg() {
 
   const postgresqlObjectSelector = new SqlBuilder({
     decide(box) {
-      return box.host.indexOf('postgres') === 0;
+      return box.host.indexOf('postgresql') === 0;
     },
-    host: 'postgres',
+    host: 'postgresql',
     merge(box, data, { result }) {
       return mergeObject(box, result);
     }

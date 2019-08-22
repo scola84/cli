@@ -1,4 +1,5 @@
 import qs from 'qs';
+import trim from 'lodash-es/trim';
 
 export function mergeField(object, link, field) {
   field.link = link;
@@ -14,7 +15,7 @@ export function mergeField(object, link, field) {
       return {
         link,
         object,
-        value
+        value: trim(value, '\'')
       };
     });
 
