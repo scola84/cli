@@ -1,21 +1,21 @@
-import fieldset from './fieldset';
+import fieldset from './fieldset'
 
-export function zip(v) {
+export function zip (v) {
   v.zip()
     .attributes({
       name: '/*name*/'
     })
-    /*#if required*/
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
-    /*#if options.country*/
+    /* /if */
+    /* #if options.country */
     .country(
       fieldset['/*name*/'].country
     )
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

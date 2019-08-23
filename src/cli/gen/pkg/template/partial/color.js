@@ -1,14 +1,14 @@
-export function color(v) {
+export function color (v) {
   v.color()
     .attributes({
       name: '/*name*/'
     })
-    /*#if required*/
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

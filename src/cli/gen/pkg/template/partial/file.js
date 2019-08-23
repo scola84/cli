@@ -1,36 +1,36 @@
-import fieldset from './fieldset';
+import fieldset from './fieldset'
 
-export function file(v) {
+export function file (v) {
   v.file()
     .attributes({
       name: '/*name*/'
     })
-    /*#if options.accept*/
+    /* #if options.accept */
     .attributes({
       accept: fieldset['/*name*/'].accept
     })
-    /*/if*/
-    /*#if options.maxsize*/
+    /* /if */
+    /* #if options.maxsize */
     .attributes({
       maxsize: fieldset['/*name*/'].maxsize
     })
-    /*/if*/
-    /*#if required*/
+    /* /if */
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
-    /*#if options.clean*/
+    /* /if */
+    /* #if options.clean */
     .clean(
       fieldset['/*name*/'].clean
     )
-    /*/if*/
-    /*#if options.validate*/
+    /* /if */
+    /* #if options.validate */
     .validate(
       fieldset['/*name*/'].validate
     )
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

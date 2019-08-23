@@ -1,4 +1,4 @@
-export function buildListCore(v) {
+export function buildListCore (v) {
   return v.main(
     v.group().class('list').append(
       v.title(
@@ -45,5 +45,5 @@ export function buildListCore(v) {
         )
       )
     )
-  );
+  )
 }

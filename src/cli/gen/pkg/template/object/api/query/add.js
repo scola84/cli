@@ -1,14 +1,14 @@
-import { SqlBuilder } from '@scola/doc';
-import { ViewBuilder } from '@scola/dom';
-import { buildFieldset } from '../../../cmn/view//*object*//fieldset';
+import { SqlBuilder } from '@scola/doc'
+import { ViewBuilder } from '@scola/dom'
+import { buildFieldset } from '../../../cmn/view//*object*//fieldset'
 
-export function buildAdd() {
+export function buildAdd () {
   const s = new SqlBuilder({
     key: '/*object*/_id',
     type: 'insert'
-  });
+  })
 
-  const v = new ViewBuilder();
+  const v = new ViewBuilder()
 
   s.build(
     s.query(
@@ -17,25 +17,23 @@ export function buildAdd() {
         s.id('/*object*/')
       ),
       s.id(
-        /*#each groups*/
-        /*#each fields*/
-        '/*name*/'
-        /*comma*/
-        /*/each*/
-        /*/each*/
+        /* #each groups */
+        /* #each fields */
+        '/*name*/'/* comma */
+        /* /each */
+        /* /each */
       ).parens(),
       s.values(
-        /*#each groups*/
-        /*#each fields*/
+        /* #each groups */
+        /* #each fields */
         s.value((request, data) => {
-          return data['/*name*/'];
-        })
-        /*comma*/
-        /*/each*/
-        /*/each*/
+          return data['/*name*/']
+        })/* comma */
+        /* /each */
+        /* /each */
       )
     )
-  );
+  )
 
   v.build(
     v.validate(
@@ -43,9 +41,9 @@ export function buildAdd() {
     ).err(
       v.throw()
     )
-  );
+  )
 
-  v.connect(s);
+  v.connect(s)
 
-  return [v, s];
+  return [v, s]
 }

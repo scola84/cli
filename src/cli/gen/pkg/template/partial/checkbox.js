@@ -1,13 +1,13 @@
-export function checkbox(v) {
+export function checkbox (v) {
   v.checkbox()
     .attributes({
       name: '/*name*/'
     })
     .properties({
       checked: (box, data) => {
-        const value = '/*options.value*/';
-        return data['/*name*/'] === value;
+        const value = '/*options.value*/'
+        return data['/*name*/'] === value
       },
       value: '/*options.value*/'
-    });
+    })
 }

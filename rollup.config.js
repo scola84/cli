@@ -1,6 +1,6 @@
-import commonjs from 'rollup-plugin-commonjs';
-import fs from 'fs';
-import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs'
+import fs from 'fs'
+import resolve from 'rollup-plugin-node-resolve'
 
 const external = [
   '@scola/doc',
@@ -13,28 +13,28 @@ const external = [
   'fs-extra',
   'handlebars',
   'handlebars-helpers',
-  'js-beautify',
   'qs',
   'recursive-readdir',
-  'source-map-support/register'
-];
+  'source-map-support/register',
+  'standard'
+]
 
-const file = 'dist/cli.cjs.js';
-const input = './src/cli.js';
+const file = 'dist/cli.cjs.js'
+const input = './src/cli.js'
 
-function chmod() {
+function chmod () {
   return {
-    writeBundle() {
-      fs.chmodSync(file, '0755');
+    writeBundle () {
+      fs.chmodSync(file, '0755')
     }
-  };
+  }
 }
 
 const plugins = [
   resolve(),
   commonjs(),
   chmod()
-];
+]
 
 export default [{
   input,
@@ -45,4 +45,4 @@ export default [{
     format: 'cjs'
   },
   plugins
-}];
+}]

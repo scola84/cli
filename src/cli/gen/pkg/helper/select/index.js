@@ -1,3 +1,3 @@
-export * from './link';
-export * from './object';
-export * from './schema';
+export * from './link'
+export * from './object'
+export * from './schema'

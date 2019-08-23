@@ -1,14 +1,14 @@
-export function iban(v) {
+export function iban (v) {
   v.text()
     .attributes({
       name: '/*name*/'
     })
-    /*#if required*/
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

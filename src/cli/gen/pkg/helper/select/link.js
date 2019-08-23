@@ -1,3 +1,3 @@
-export function selectLink(box, data) {
-  return `${data.link}`;
+export function selectLink (box, data) {
+  return `${data.link}`
 }

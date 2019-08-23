@@ -1,4 +1,4 @@
-export function buildCurrent(v) {
+export function buildCurrent (v) {
   return v.group().class('current').append(
     v.title().text(
       v.print().format('/*object*/.link./*link*/.title.current')
@@ -35,5 +35,5 @@ export function buildCurrent(v) {
         )
       )
     )
-  );
+  )
 }

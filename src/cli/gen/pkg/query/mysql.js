@@ -1,4 +1,4 @@
-export function mysql(s, schema, name) {
+export function mysql (s, schema, name) {
   s.build(
     s.query(
       s.select(
@@ -76,5 +76,5 @@ export function mysql(s, schema, name) {
         )
       )
     )
-  );
+  )
 }

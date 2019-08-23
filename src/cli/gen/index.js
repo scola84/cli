@@ -1,2 +1,2 @@
-export * from './app';
-export * from './pkg';
+export * from './app'
+export * from './pkg'

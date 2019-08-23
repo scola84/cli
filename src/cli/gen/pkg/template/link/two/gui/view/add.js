@@ -1,9 +1,9 @@
-import { ViewBuilder } from '@scola/dom';
-import { buildFieldset } from '../../../cmn/view//*link*//fieldset';
-import { buildNew } from '../../../cmn/view//*link*//new';
+import { ViewBuilder } from '@scola/dom'
+import { buildFieldset } from '../../../cmn/view//*link*//fieldset'
+import { buildNew } from '../../../cmn/view//*link*//new'
 
-export function buildAdd() {
-  const v = new ViewBuilder();
+export function buildAdd () {
+  const v = new ViewBuilder()
 
   v.build(
     v.panel(
@@ -61,7 +61,7 @@ export function buildAdd() {
         v.selector('.new .body')
       )
     )
-  );
+  )
 
-  return v;
+  return v
 }

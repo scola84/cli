@@ -1,4 +1,4 @@
-export function postgresql(s, schema, name) {
+export function postgresql (s, schema, name) {
   s.build(
     s.query(
       s.select(
@@ -120,5 +120,5 @@ export function postgresql(s, schema, name) {
         )
       )
     )
-  );
+  )
 }

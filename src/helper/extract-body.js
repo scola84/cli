@@ -1,23 +1,19 @@
-import fs from 'fs-extra';
+import fs from 'fs-extra'
 
-export function extractBody(file) {
+export function extractBody (file) {
   const content = String(fs.readFileSync(file))
-    .split(/\r?\n/);
+    .split(/\r?\n/)
 
-  let begin = 0;
-  let end = void 0;
+  let begin = 0
+  let end
 
   for (let i = 0; i < content.length; i += 1) {
     if (content[i].slice(0, 6) === 'export') {
-      begin = i + 1;
-      end = -2;
-      break;
+      begin = i + 1
+      end = -2
+      break
     }
   }
 
-  return {
-    begin,
-    end,
-    content: content.slice(begin, end)
-  };
+  return content.slice(begin, end)
 }

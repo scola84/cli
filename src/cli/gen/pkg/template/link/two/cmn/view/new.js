@@ -1,4 +1,4 @@
-export function buildNew(v) {
+export function buildNew (v) {
   return v.group().class('new').append(
     v.title().text(
       v.print().format('/*object*/.link./*link*/.title.new')
@@ -47,5 +47,5 @@ export function buildNew(v) {
       ),
       v.loading()
     )
-  );
+  )
 }

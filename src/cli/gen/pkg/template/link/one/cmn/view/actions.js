@@ -1,4 +1,4 @@
-export function buildActions(v) {
+export function buildActions (v) {
   return v.fold(
     v.group(
       v.title().class('click fold handle all').append(
@@ -20,5 +20,5 @@ export function buildActions(v) {
         )
       )
     )
-  );
+  )
 }

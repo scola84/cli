@@ -1,1 +1,1 @@
-export function app() {}
+export function app () {}

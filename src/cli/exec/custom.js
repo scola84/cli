@@ -1,5 +1,5 @@
-import { Worker } from '@scola/worker';
-import { execSync } from 'child_process';
+import { Worker } from '@scola/worker'
+import { execSync } from 'child_process'
 
 const alias = {
   branch: 'git status | head -n 1',
@@ -26,32 +26,32 @@ const alias = {
     'push'
   ],
   push: 'git push --follow-tags'
-};
+}
 
-export function custom() {
-  function resolve(command) {
-    command = alias[command] || command;
+export function custom () {
+  function resolve (command) {
+    command = alias[command] || command
 
     return Array.isArray(command) ? command.map((cmd) => {
-      return resolve(cmd);
-    }).join(' && ') : command;
+      return resolve(cmd)
+    }).join(' && ') : command
   }
 
   return new Worker({
-    act(box, data, callback) {
-      const command = resolve(box.command);
+    act (box, data, callback) {
+      const command = resolve(box.command)
 
-      this.log('cli', box, data, `${data}$ ${command}`);
+      this.log('cli', box, data, `${data}$ ${command}`)
 
       try {
-        execSync(command, { cwd: data, stdio: 'inherit' });
+        execSync(command, { cwd: data, stdio: 'inherit' })
       } catch (error) {
-        data = error;
+        data = error
       }
 
-      console.log();
+      console.log()
 
-      this.pass(box, data, callback);
+      this.pass(box, data, callback)
     }
-  });
+  })
 }

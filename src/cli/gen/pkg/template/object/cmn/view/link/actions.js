@@ -1,4 +1,4 @@
-export function buildActions(v) {
+export function buildActions (v) {
   return v.fold(
     v.group(
       v.title().class('click fold handle all').append(
@@ -7,7 +7,7 @@ export function buildActions(v) {
         )
       ),
       v.body(
-        /*#each links*/
+        /* #each links */
         v.click(
           v.item().class('click fold transition').append(
             v.label(
@@ -18,10 +18,9 @@ export function buildActions(v) {
           )
         ).act(
           v.route().view('add-/*object*/-/*link*/:{/*object*/_id}@pop')
-        )
-        /*comma*/
-        /*/each*/
+        )/* comma */
+        /* /each */
       )
     )
-  );
+  )
 }

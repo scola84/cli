@@ -1,1 +1,1 @@
-export * from './comma';
+export * from './comma'

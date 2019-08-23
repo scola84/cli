@@ -1,7 +1,7 @@
-import { ViewBuilder } from '@scola/dom';
+import { ViewBuilder } from '@scola/dom'
 
-export function buildList() {
-  const v = new ViewBuilder();
+export function buildList () {
+  const v = new ViewBuilder()
 
   v.build(
     v.panel().class('outset-x outset-y').append(
@@ -98,7 +98,7 @@ export function buildList() {
         )
       )
     )
-  );
+  )
 
-  return v;
+  return v
 }

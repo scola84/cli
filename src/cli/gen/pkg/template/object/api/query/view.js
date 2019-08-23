@@ -1,9 +1,9 @@
-import { SqlBuilder } from '@scola/doc';
+import { SqlBuilder } from '@scola/doc'
 
-export function buildView() {
+export function buildView () {
   const s = new SqlBuilder({
     type: 'object'
-  });
+  })
 
   s.build(
     s.query(
@@ -15,12 +15,12 @@ export function buildView() {
         s.eq(
           s.id('/*object*/_id'),
           s.value((request) => {
-              return request.params['/*object*/_id'];
+            return request.params['/*object*/_id']
           })
         )
       )
     )
-  );
+  )
 
-  return s;
+  return s
 }

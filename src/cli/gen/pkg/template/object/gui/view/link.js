@@ -1,9 +1,9 @@
-import { ViewBuilder } from '@scola/dom';
-import { buildAside } from '../../../cmn/view//*object*//link/aside';
-import { buildLinkCore } from '../../../cmn/view//*object*//link';
+import { ViewBuilder } from '@scola/dom'
+import { buildAside } from '../../../cmn/view//*object*//link/aside'
+import { buildLinkCore } from '../../../cmn/view//*object*//link'
 
-export function buildLink() {
-  const v = new ViewBuilder();
+export function buildLink () {
+  const v = new ViewBuilder()
 
   v.build(
     v.panel(
@@ -32,7 +32,7 @@ export function buildLink() {
         buildAside(v)
       )
     )
-  );
+  )
 
-  return v;
+  return v
 }

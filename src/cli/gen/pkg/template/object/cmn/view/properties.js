@@ -1,4 +1,4 @@
-export function buildProperties(v) {
+export function buildProperties (v) {
   return v.fold(
     v.group(
       v.title().class('click fold handle all').append(
@@ -7,9 +7,9 @@ export function buildProperties(v) {
         )
       ),
       v.body(
-        /*#each groups*/
-        /*#each fields*/
-        /*#if options.property*/
+        /* #each groups */
+        /* #each fields */
+        /* #if options.property */
         v.item().class('fold transition').append(
           v.label(
             v.div().class('l0').text(
@@ -19,12 +19,11 @@ export function buildProperties(v) {
               v.print().format('/*object*/.view.properties./*name*/.l1')
             )
           )
-        )
-        /*comma*/
-        /*/if*/
-        /*/each*/
-        /*/each*/
+        )/* comma */
+        /* /if */
+        /* /each */
+        /* /each */
       )
     )
-  );
+  )
 }

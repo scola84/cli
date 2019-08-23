@@ -1,2 +1,2 @@
-export * from './custom';
-export * from './install';
+export * from './custom'
+export * from './install'

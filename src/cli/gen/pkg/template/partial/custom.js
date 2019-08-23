@@ -1,1 +1,1 @@
-import * as fieldset from './fieldset/';
+import * as fieldset from './fieldset/'

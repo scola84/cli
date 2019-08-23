@@ -1,36 +1,36 @@
-import fieldset from './fieldset';
+import fieldset from './fieldset'
 
-export function date(v) {
+export function date (v) {
   v.date()
     .attributes({
       name: '/*name*/'
     })
-    /*#if max*/
+    /* #if max */
     .attributes({
       max: fieldset['/*name*/'].max
     })
-    /*/if*/
-    /*#if options.min*/
+    /* /if */
+    /* #if options.min */
     .attributes({
       min: fieldset['/*name*/'].min
     })
-    /*/if*/
-    /*#if required*/
+    /* /if */
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
-    /*#if options.from*/
+    /* /if */
+    /* #if options.from */
     .formatFrom(
       fieldset['/*name*/'].from
     )
-    /*/if*/
-    /*#if options.to*/
+    /* /if */
+    /* #if options.to */
     .formatTo(
       fieldset['/*name*/'].to
     )
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

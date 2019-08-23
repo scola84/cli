@@ -1,31 +1,31 @@
-import fieldset from './fieldset';
+import fieldset from './fieldset'
 
-export function text(v) {
+export function text (v) {
   v.text()
     .attributes({
       name: '/*name*/'
     })
-    /*#if maxlength*/
+    /* #if maxlength */
     .attributes({
       maxlength: '/*maxlength*/'
     })
-    /*/if*/
-    /*#if required*/
+    /* /if */
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
-    /*#if options.clean*/
+    /* /if */
+    /* #if options.clean */
     .clean(
       fieldset['/*name*/'].clean
     )
-    /*/if*/
-    /*#if options.validate*/
+    /* /if */
+    /* #if options.validate */
     .validate(
       fieldset['/*name*/'].validate
     )
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

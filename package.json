@@ -10,7 +10,8 @@
   "devDependencies": {
     "rollup": "^1.19.4",
     "rollup-plugin-commonjs": "^10.0.2",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "standard": "^14.0.2"
   },
   "dependencies": {
     "commander": "^3.0.0",
@@ -18,7 +19,6 @@
     "fs-extra": "^8.1.0",
     "handlebars": "^4.1.2",
     "handlebars-helpers": "^0.10.0",
-    "js-beautify": "^1.10.2",
     "lodash-es": "^4.17.15",
     "qs": "^6.8.0",
     "recursive-readdir": "^2.2.2",

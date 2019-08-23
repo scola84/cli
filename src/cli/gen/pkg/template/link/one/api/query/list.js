@@ -1,67 +1,67 @@
-import { SqlBuilder } from '@scola/doc';
+import { SqlBuilder } from '@scola/doc'
 
-export function buildList() {
-  const s = new SqlBuilder({
+export function buildList () {
+  const sb = new SqlBuilder({
     type: 'list'
-  });
+  })
 
-  s.build(
-    s.query(
-      s.select('*'),
-      s.from(
-        s.id('/*table*/')
+  sb.build(
+    sb.query(
+      sb.select('*'),
+      sb.from(
+        sb.id('/*table*/')
       ),
-      s.where(
-        s.and(
-          s.eq(
-            s.id('/*table*/./*object*/_id'),
-            s.value((request) => {
-              return request.params['/*object*/_id'];
+      sb.where(
+        sb.and(
+          sb.eq(
+            sb.id('/*table*/./*object*/_id'),
+            sb.value((request) => {
+              return request.params['/*object*/_id']
             })
           ),
-          s.search().columns(
-            /*#each search*/
-            '/*link*/./*name*/'
-            /*comma*/
-            /*/each*/
+          sb.search()
+            .columns(
+            /* #each search */
+              '/*link*/./*name*/'/* comma */
+            /* /each */
+            )
+            .search((request) => {
+              return request.url.query.search
+            })
+        )
+      ),
+      sb.orderBy(
+        sb.order()
+          .columns(
+          /* #each order */
+            '/*link*/./*name*/'/* comma */
+          /* /each */
           )
-          .search((request) => {
-            return request.url.query.search;
+          .default(
+          /* #each default */
+            sb['/*direction*/'](
+              sb.id('/*link*/./*name*/')
+            )/* comma */
+          /* /each */
+          )
+          .order((request) => {
+            return request.url.query.order
           })
-        )
+          .by((request) => {
+            return request.url.query.by
+          })
       ),
-      s.orderBy(
-        s.order().columns(
-          /*#each order*/
-          '/*link*/./*name*/'
-          /*comma*/
-          /*/each*/
-        )
-        .default(
-          /*#each default*/
-          s['/*direction*/'](
-            s.id('/*link*/./*name*/')
-          )
-          /*comma*/
-          /*/each*/
-        )
-        .order((request) => {
-          return request.url.query.order;
-        })
-        .by((request) => {
-          return request.url.query.by;
-        })
-      ),
-      s.limit(
-        s.slice().offset((request) => {
-          return request.url.query.offset;
-        })
-        .count((request) => {
-          return request.url.query.count;
-        })
+      sb.limit(
+        sb.slice()
+          .offset((request) => {
+            return request.url.query.offset
+          })
+          .count((request) => {
+            return request.url.query.count
+          })
       )
     )
-  );
+  )
 
-  return s;
+  return sb
 }

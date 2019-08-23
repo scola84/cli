@@ -1,18 +1,18 @@
-export function comma(context) {
+export function comma (context) {
   if (context.hash.always === true) {
-    return ',';
+    return ','
   }
 
-  let parent = context.data;
-  let isLast = parent.last;
+  let parent = context.data
+  let isLast = parent.last
 
   while (parent) {
     if (parent.last) {
-      isLast = isLast && true;
+      isLast = isLast && true
     }
 
-    parent = parent._parent;
+    parent = parent._parent
   }
 
-  return isLast ? '' : ',';
+  return isLast ? '' : ','
 }

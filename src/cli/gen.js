@@ -1,26 +1,26 @@
-import { Router, Worker } from '@scola/worker';
+import { Router, Worker } from '@scola/worker'
 
 import {
   app,
   pkg
-} from './gen/';
+} from './gen/'
 
-export function gen(options) {
-  const unifier = new Worker();
+export function gen (options) {
+  const unifier = new Worker()
 
   const router = new Router({
-    filter(box) {
-      return box.type;
+    filter (box) {
+      return box.type
     }
-  });
+  })
 
   router
     .connect('app', app(options))
-    .connect(unifier);
+    .connect(unifier)
 
   router
     .connect('pkg', pkg(options))
-    .connect(unifier);
+    .connect(unifier)
 
-  return [router, unifier];
+  return [router, unifier]
 }

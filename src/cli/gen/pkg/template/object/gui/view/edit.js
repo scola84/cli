@@ -1,8 +1,8 @@
-import { ViewBuilder } from '@scola/dom';
-import { buildFieldset } from '../../../cmn/view//*object*//fieldset';
+import { ViewBuilder } from '@scola/dom'
+import { buildFieldset } from '../../../cmn/view//*object*//fieldset'
 
-export function buildEdit() {
-  const v = new ViewBuilder();
+export function buildEdit () {
+  const v = new ViewBuilder()
 
   v.build(
     v.panel(
@@ -60,7 +60,7 @@ export function buildEdit() {
         )
       )
     )
-  );
+  )
 
-  return v;
+  return v
 }

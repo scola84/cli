@@ -1,56 +1,56 @@
-import { readdirSync, readFileSync } from 'fs';
+import { readdirSync, readFileSync } from 'fs'
 
-export function resolveVersion(options) {
-  const files = [];
+export function resolveVersion (options) {
+  const files = []
 
   const {
     from = '',
-      to = ''
-  } = options.version;
+    to = ''
+  } = options.version
 
-  let direction = 'equal';
+  let direction = 'equal'
 
   if (to > from) {
-    direction = 'up';
+    direction = 'up'
   } else if (to < from) {
-    direction = 'down';
+    direction = 'down'
   }
 
   options.dir.forEach(({ dir, name }) => {
-    let dirs = null;
+    let dirs = null
 
     try {
-      dirs = readdirSync(dir);
+      dirs = readdirSync(dir)
     } catch (error) {
-      dirs = [];
+      dirs = []
     }
 
     dirs.sort().forEach((version) => {
-      let base = '';
-      let list = [];
-      let postfix = '';
+      let base = ''
+      let list = []
+      let postfix = ''
 
       if (direction === 'up') {
         if (version > from && version <= to) {
-          postfix = direction;
+          postfix = direction
         }
       } else if (direction === 'down') {
         if (version <= from && version > to) {
-          postfix = direction;
+          postfix = direction
         }
       } else if (direction === 'equal') {
         if (version === to) {
-          postfix = direction;
+          postfix = direction
         }
       }
 
       if (postfix) {
-        base = dir + '/' + version + '/' + postfix;
+        base = dir + '/' + version + '/' + postfix
 
         try {
-          list = readdirSync(base);
+          list = readdirSync(base)
         } catch (e) {
-          list = [];
+          list = []
         }
 
         list.forEach((file) => {
@@ -60,11 +60,11 @@ export function resolveVersion(options) {
             fileName: file,
             name,
             version
-          });
-        });
+          })
+        })
       }
-    });
-  });
+    })
+  })
 
-  return files;
+  return files
 }

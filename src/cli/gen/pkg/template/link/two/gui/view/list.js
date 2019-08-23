@@ -1,9 +1,9 @@
-import { ViewBuilder } from '@scola/dom';
-import { buildAside } from '../../../cmn/view//*link*//aside';
-import { buildListCore } from '../../../cmn/view//*link*//list';
+import { ViewBuilder } from '@scola/dom'
+import { buildAside } from '../../../cmn/view//*link*//aside'
+import { buildListCore } from '../../../cmn/view//*link*//list'
 
-export function buildList() {
-  const v = new ViewBuilder();
+export function buildList () {
+  const v = new ViewBuilder()
 
   v.build(
     v.panel(
@@ -50,7 +50,7 @@ export function buildList() {
         v.selector('.body .group.list')
       )
     )
-  );
+  )
 
-  return v;
+  return v
 }

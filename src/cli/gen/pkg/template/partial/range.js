@@ -1,36 +1,36 @@
-import fieldset from './fieldset';
+import fieldset from './fieldset'
 
-export function range(v) {
+export function range (v) {
   v.range()
     .attributes({
       name: '/*name*/'
     })
-    /*#if max*/
+    /* #if max */
     .attributes({
       max: fieldset['/*name*/'].max
     })
-    /*/if*/
-    /*#if options.min*/
+    /* /if */
+    /* #if options.min */
     .attributes({
       min: fieldset['/*name*/'].min
     })
-    /*/if*/
-    /*#if required*/
+    /* /if */
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
-    /*#if options.clean*/
+    /* /if */
+    /* #if options.clean */
     .clean(
       fieldset['/*name*/'].clean
     )
-    /*/if*/
-    /*#if options.validate*/
+    /* /if */
+    /* #if options.validate */
     .validate(
       fieldset['/*name*/'].validate
     )
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }

@@ -1,26 +1,26 @@
-import fieldset from './fieldset';
+import fieldset from './fieldset'
 
-export function tel(v) {
+export function tel (v) {
   v.tel()
     .attributes({
       name: '/*name*/'
     })
-    /*#if required*/
+    /* #if required */
     .attributes({
       required: 'required'
     })
-    /*/if*/
-    /*#if options.country*/
+    /* /if */
+    /* #if options.country */
     .country(
       fieldset['/*name*/'].country
     )
-    /*/if*/
-    /*#if options.format*/
+    /* /if */
+    /* #if options.format */
     .format(
       fieldset['/*name*/'].format
     )
-    /*/if*/
+    /* /if */
     .properties({
       value: (box, data) => data['/*name*/']
-    });
+    })
 }
