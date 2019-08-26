@@ -44,7 +44,7 @@ function install (files, options = {}) {
 
   files.forEach((file) => {
     const data = readFileSync(file)
-    const matches = String(data).match(/^import ([^;]|\n)*;$/mg) || []
+    const matches = String(data).match(/^import[^']* '(.*)'/gm) || []
 
     let module = null
     let scope = null

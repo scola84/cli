@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function zip (v) {
-  v.zip()
+export function zip (vb) {
+  vb.zip()
     .attributes({
       name: '/*name*/'
     })
@@ -16,6 +16,6 @@ export function zip (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

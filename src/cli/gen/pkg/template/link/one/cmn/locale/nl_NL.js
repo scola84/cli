@@ -6,19 +6,18 @@ snippet.Print.addStrings({
       link: {
         '/*link*/': {
           form: {
-            hint: {
-            },
+            hint: {},
             label: {
               /* #each groups */
               /* #each fields */
-              '/*name*/': '/*name*/'/* comma */
+              '/*name*/': '/*name*/' /* comma */
               /* /each */
               /* /each */
             },
             title: {
               /* #each groups */
               /* #unlessEq name compare="default" */
-              '/*name*/': '/*name*/'/* comma */
+              '/*name*/': '/*name*/' /* comma */
               /* /unlessEq */
               /* /each */
             },
@@ -26,7 +25,7 @@ snippet.Print.addStrings({
               /* #each groups */
               /* #each fields */
               /* #each values */
-              '/*value*/': '/*value*/'/* comma */
+              '/*value*/': '/*value*/' /* comma */
               /* /each */
               /* /each */
               /* /each */

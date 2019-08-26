@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function password (v) {
-  v.password()
+export function password (vb) {
+  vb.password()
     .attributes({
       name: '/*name*/'
     })
@@ -26,6 +26,6 @@ export function password (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

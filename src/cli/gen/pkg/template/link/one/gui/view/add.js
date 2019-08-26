@@ -2,52 +2,52 @@ import { ViewBuilder } from '@scola/dom'
 import { buildFieldset } from '../../../cmn/view//*link*//fieldset'
 
 export function buildAdd () {
-  const v = new ViewBuilder()
+  const vb = new ViewBuilder()
 
-  v.build(
-    v.panel(
-      v.header(
-        v.bar(
-          v.left(
-            v.click(
-              v.button().text(
-                v.print().format('button.cancel')
+  vb.build(
+    vb.panel(
+      vb.header(
+        vb.bar(
+          vb.left(
+            vb.click(
+              vb.button().text(
+                vb.print().format('button.cancel')
               )
             ).act(
-              v.route().view('@self:clr')
+              vb.route().view('@self:clr')
             )
           ),
-          v.center(
-            v.title().text(
-              v.print().format('/*object*/.link./*link*/.title.1')
+          vb.center(
+            vb.title().text(
+              vb.print().format('/*object*/.link./*link*/.title.1')
             )
           ),
-          v.right(
-            v.button().form('add').text(
-              v.print().format('button.save')
+          vb.right(
+            vb.button().form('add').text(
+              vb.print().format('button.save')
             )
           )
         ),
-        v.message(),
-        v.progress()
+        vb.message(),
+        vb.progress()
       ),
-      v.body(
-        v.submit(
-          v.form().id('add').append(
-            buildFieldset(v)
+      vb.body(
+        vb.submit(
+          vb.form().id('add').append(
+            buildFieldset(vb)
           )
         ).act(
-          v.validate(
-            v.selector('.body form')
+          vb.validate(
+            vb.selector('.body form')
           ).act(
-            v.postObject().name('/*object*/', '/*link*/')
+            vb.postObject().name('/*object*/', '/*link*/')
           ).err(
-            v.selector('.body .hint')
+            vb.selector('.body .hint')
           )
         )
       )
     )
   )
 
-  return v
+  return vb
 }

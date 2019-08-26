@@ -1,10 +1,10 @@
-export function checkbox (v) {
-  v.checkbox()
+export function checkbox (vb) {
+  vb.checkbox()
     .attributes({
       name: '/*name*/'
     })
     .properties({
-      checked: (box, data) => {
+      checked: (route, data) => {
         const value = '/*options.value*/'
         return data['/*name*/'] === value
       },

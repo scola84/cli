@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function textarea (v) {
-  v.textarea()
+export function textarea (vb) {
+  vb.textarea()
     .attributes({
       name: '/*name*/'
     })
@@ -26,6 +26,6 @@ export function textarea (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

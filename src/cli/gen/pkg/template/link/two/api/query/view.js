@@ -1,37 +1,37 @@
 import { SqlBuilder } from '@scola/doc'
 
 export function buildView () {
-  const s = new SqlBuilder({
+  const sb = new SqlBuilder({
     type: 'object'
   })
 
-  s.build(
-    s.query(
-      s.select('*'),
-      s.from(
-        s.id('/*table*/')
+  sb.build(
+    sb.query(
+      sb.select('*'),
+      sb.from(
+        sb.id('/*table*/')
       ),
-      s.left(),
-      s.join(
-        s.id('/*link*/')
+      sb.left(),
+      sb.join(
+        sb.id('/*link*/')
       ),
-      s.on(
-        s.eq(
-          s.id('/*table*/./*link*/_id'),
-          s.id('/*link*/./*link*/_id')
+      sb.on(
+        sb.eq(
+          sb.id('/*table*/./*link*/_id'),
+          sb.id('/*link*/./*link*/_id')
         )
       ),
-      s.where(
-        s.and(
-          s.eq(
-            s.id('/*table*/./*object*/_id'),
-            s.value((request) => {
+      sb.where(
+        sb.and(
+          sb.eq(
+            sb.id('/*table*/./*object*/_id'),
+            sb.value((request) => {
               return request.params['/*object*/_id']
             })
           ),
-          s.eq(
-            s.id('/*table*/./*link*/_id'),
-            s.value((request) => {
+          sb.eq(
+            sb.id('/*table*/./*link*/_id'),
+            sb.value((request) => {
               return request.params['/*link*/_id']
             })
           )
@@ -40,5 +40,5 @@ export function buildView () {
     )
   )
 
-  return s
+  return sb
 }

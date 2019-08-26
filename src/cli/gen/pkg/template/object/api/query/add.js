@@ -3,47 +3,47 @@ import { ViewBuilder } from '@scola/dom'
 import { buildFieldset } from '../../../cmn/view//*object*//fieldset'
 
 export function buildAdd () {
-  const s = new SqlBuilder({
+  const sb = new SqlBuilder({
     key: '/*object*/_id',
     type: 'insert'
   })
 
-  const v = new ViewBuilder()
+  const vb = new ViewBuilder()
 
-  s.build(
-    s.query(
-      s.insert(),
-      s.into(
-        s.id('/*object*/')
+  sb.build(
+    sb.query(
+      sb.insert(),
+      sb.into(
+        sb.id('/*object*/')
       ),
-      s.id(
+      sb.id(
         /* #each groups */
         /* #each fields */
-        '/*name*/'/* comma */
+        '/*name*/' /* comma */
         /* /each */
         /* /each */
       ).parens(),
-      s.values(
+      sb.values(
         /* #each groups */
         /* #each fields */
-        s.value((request, data) => {
+        sb.value((request, data) => {
           return data['/*name*/']
-        })/* comma */
+        }) /* comma */
         /* /each */
         /* /each */
       )
     )
   )
 
-  v.build(
-    v.validate(
-      buildFieldset(v)
+  vb.build(
+    vb.validate(
+      buildFieldset(vb)
     ).err(
-      v.throw()
+      vb.throw()
     )
   )
 
-  v.connect(s)
+  vb.connect(sb)
 
-  return [v, s]
+  return [vb, sb]
 }

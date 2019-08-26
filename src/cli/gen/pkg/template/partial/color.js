@@ -1,5 +1,5 @@
-export function color (v) {
-  v.color()
+export function color (vb) {
+  vb.color()
     .attributes({
       name: '/*name*/'
     })
@@ -9,6 +9,6 @@ export function color (v) {
     })
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

@@ -3,65 +3,65 @@ import { buildFieldset } from '../../../cmn/view//*link*//fieldset'
 import { buildNew } from '../../../cmn/view//*link*//new'
 
 export function buildAdd () {
-  const v = new ViewBuilder()
+  const vb = new ViewBuilder()
 
-  v.build(
-    v.panel(
-      v.header(
-        v.bar(
-          v.left(
-            v.click(
-              v.button().text(
-                v.print().format('button.cancel')
+  vb.build(
+    vb.panel(
+      vb.header(
+        vb.bar(
+          vb.left(
+            vb.click(
+              vb.button().text(
+                vb.print().format('button.cancel')
               )
             ).act(
-              v.route().view('@self:clr')
+              vb.route().view('@self:clr')
             )
           ),
-          v.center(
-            v.title().text(
-              v.print().format('/*object*/.link./*link*/.title.1')
+          vb.center(
+            vb.title().text(
+              vb.print().format('/*object*/.link./*link*/.title.1')
             )
           ),
-          v.right(
-            v.button().form('add').text(
-              v.print().format('button.save')
+          vb.right(
+            vb.button().form('add').text(
+              vb.print().format('button.save')
             )
           )
         ),
-        v.input(
-          v.search().class('in').placeholder(
-            v.print().format('search.placeholder')
+        vb.input(
+          vb.search().class('in').placeholder(
+            vb.print().format('search.placeholder')
           )
         ).act(
-          v.selector('.search'),
-          v.selector('.new .body')
+          vb.selector('.search'),
+          vb.selector('.new .body')
         ),
-        v.message(),
-        v.progress()
+        vb.message(),
+        vb.progress()
       ),
-      v.scroll(
-        v.body(
-          v.submit(
-            v.form().id('add').append(
-              buildFieldset(v),
-              buildNew(v)
+      vb.scroll(
+        vb.body(
+          vb.submit(
+            vb.form().id('add').append(
+              buildFieldset(vb),
+              buildNew(vb)
             )
           ).act(
-            v.validate(
-              v.selector('.body form')
+            vb.validate(
+              vb.selector('.body form')
             ).act(
-              v.postObject().name('/*object*/', '/*link*/')
+              vb.postObject().name('/*object*/', '/*link*/')
             ).err(
-              v.selector('.body .hint')
+              vb.selector('.body .hint')
             )
           )
         )
       ).act(
-        v.selector('.new .body')
+        vb.selector('.new .body')
       )
     )
   )
 
-  return v
+  return vb
 }

@@ -3,16 +3,16 @@ import { ViewBuilder } from '@scola/dom'
 import { buildFieldset } from '../../../cmn/view//*link*//fieldset'
 
 export function buildAdd () {
-  const s = new SqlBuilder()
-  const v = new ViewBuilder()
+  const sb = new SqlBuilder()
+  const vb = new ViewBuilder()
 
-  s.build(
-    s.query(
-      s.insert(),
-      s.into(
-        s.id('/*table*/')
+  sb.build(
+    sb.query(
+      sb.insert(),
+      sb.into(
+        sb.id('/*table*/')
       ),
-      s.id(
+      sb.id(
         /* #each groups */
         /* #each fields */
         '/*name*/',
@@ -20,30 +20,30 @@ export function buildAdd () {
         /* /each */
         '/*object*/_id'
       ).parens(),
-      s.values(
+      sb.values(
         /* #each groups */
         /* #each fields */
-        s.value((request, data) => {
+        sb.value((request, data) => {
           return data['/*name*/']
         }),
         /* /each */
         /* /each */
-        s.value((request) => {
+        sb.value((request) => {
           return request.params['/*object*/_id']
         })
       )
     )
   )
 
-  v.build(
-    v.validate(
-      buildFieldset(v)
+  vb.build(
+    vb.validate(
+      buildFieldset(vb)
     ).err(
-      v.throw()
+      vb.throw()
     )
   )
 
-  v.connect(s)
+  vb.connect(sb)
 
-  return [v, s]
+  return [vb, sb]
 }

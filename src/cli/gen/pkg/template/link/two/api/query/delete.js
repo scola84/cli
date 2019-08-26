@@ -1,25 +1,25 @@
 import { SqlBuilder } from '@scola/doc'
 
 export function buildDelete () {
-  const s = new SqlBuilder()
+  const sb = new SqlBuilder()
 
-  s.build(
-    s.query(
-      s.delete(),
-      s.from(
-        s.id('/*table*/')
+  sb.build(
+    sb.query(
+      sb.delete(),
+      sb.from(
+        sb.id('/*table*/')
       ),
-      s.where(
-        s.and(
-          s.eq(
-            s.id('/*object*/_id'),
-            s.value((request) => {
+      sb.where(
+        sb.and(
+          sb.eq(
+            sb.id('/*object*/_id'),
+            sb.value((request) => {
               return request.params['/*object*/_id']
             })
           ),
-          s.eq(
-            s.id('/*link*/_id'),
-            s.value((request) => {
+          sb.eq(
+            sb.id('/*link*/_id'),
+            sb.value((request) => {
               return request.params['/*link*/_id']
             })
           )
@@ -28,5 +28,5 @@ export function buildDelete () {
     )
   )
 
-  return s
+  return sb
 }

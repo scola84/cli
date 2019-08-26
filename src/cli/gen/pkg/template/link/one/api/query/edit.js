@@ -3,37 +3,37 @@ import { ViewBuilder } from '@scola/dom'
 import { buildFieldset } from '../../../cmn/view//*link*//fieldset'
 
 export function buildEdit () {
-  const s = new SqlBuilder()
-  const v = new ViewBuilder()
+  const sb = new SqlBuilder()
+  const vb = new ViewBuilder()
 
-  s.build(
-    s.query(
-      s.update(
-        s.id('/*table*/')
+  sb.build(
+    sb.query(
+      sb.update(
+        sb.id('/*table*/')
       ),
-      s.set(
+      sb.set(
         /* #each groups */
         /* #each fields */
-        s.eq(
-          s.id('/*name*/'),
-          s.value((request, data) => {
+        sb.eq(
+          sb.id('/*name*/'),
+          sb.value((request, data) => {
             return data['/*name*/']
           })
-        )/* comma */
+        ) /* comma */
         /* /each */
         /* /each */
       ),
-      s.where(
-        s.and(
-          s.eq(
-            s.id('/*object*/_id'),
-            s.value((request) => {
+      sb.where(
+        sb.and(
+          sb.eq(
+            sb.id('/*object*/_id'),
+            sb.value((request) => {
               return request.params['/*object*/_id']
             })
           ),
-          s.eq(
-            s.id('/*link*/_id'),
-            s.value((request) => {
+          sb.eq(
+            sb.id('/*link*/_id'),
+            sb.value((request) => {
               return request.params['/*link*/_id']
             })
           )
@@ -42,15 +42,15 @@ export function buildEdit () {
     )
   )
 
-  v.build(
-    v.validate(
-      buildFieldset(v)
+  vb.build(
+    vb.validate(
+      buildFieldset(vb)
     ).err(
-      v.throw()
+      vb.throw()
     )
   )
 
-  v.connect(s)
+  vb.connect(sb)
 
-  return [v, s]
+  return [vb, sb]
 }

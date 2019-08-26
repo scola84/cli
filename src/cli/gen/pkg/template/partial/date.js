@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function date (v) {
-  v.date()
+export function date (vb) {
+  vb.date()
     .attributes({
       name: '/*name*/'
     })
@@ -31,6 +31,6 @@ export function date (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

@@ -3,36 +3,36 @@ import { buildAside } from '../../../cmn/view//*object*//view/aside'
 import { buildViewCore } from '../../../cmn/view//*object*//view'
 
 export function buildView () {
-  const v = new ViewBuilder()
+  const vb = new ViewBuilder()
 
-  v.build(
-    v.panel(
-      v.header(
-        v.bar(
-          v.left(
-            v.click(
-              v.button().menu().class('icon ion-ios-arrow-back').text(
-                v.print().format('button.back')
+  vb.build(
+    vb.panel(
+      vb.header(
+        vb.bar(
+          vb.left(
+            vb.click(
+              vb.button().menu().class('icon ion-ios-arrow-back').text(
+                vb.print().format('button.back')
               )
             ).act(
-              v.route().view('@main:bwd&ltr')
+              vb.route().view('@main:bwd&ltr')
             )
           ),
-          v.center(
-            v.title().text(
-              v.print().format('/*object*/.title.1')
+          vb.center(
+            vb.title().text(
+              vb.print().format('/*object*/.title.1')
             )
           )
         ),
-        v.message(),
-        v.progress()
+        vb.message(),
+        vb.progress()
       ),
-      v.body(
-        buildViewCore(v),
-        buildAside(v)
+      vb.body(
+        buildViewCore(vb),
+        buildAside(vb)
       )
     )
   )
 
-  return v
+  return vb
 }

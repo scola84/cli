@@ -1,5 +1,5 @@
-export function iban (v) {
-  v.text()
+export function iban (vb) {
+  vb.text()
     .attributes({
       name: '/*name*/'
     })
@@ -9,6 +9,6 @@ export function iban (v) {
     })
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

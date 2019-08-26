@@ -1,38 +1,38 @@
 import { SqlBuilder } from '@scola/doc'
 
 export function buildList () {
-  const s = new SqlBuilder({
+  const sb = new SqlBuilder({
     type: 'list'
   })
 
-  s.build(
-    s.query(
-      s.select('*'),
-      s.from(
-        s.id('/*table*/')
+  sb.build(
+    sb.query(
+      sb.select('*'),
+      sb.from(
+        sb.id('/*table*/')
       ),
-      s.left(),
-      s.join(
-        s.id('/*link*/')
+      sb.left(),
+      sb.join(
+        sb.id('/*link*/')
       ),
-      s.on(
-        s.eq(
-          s.id('/*table*/./*link*/_id'),
-          s.id('/*link*/./*link*/_id')
+      sb.on(
+        sb.eq(
+          sb.id('/*table*/./*link*/_id'),
+          sb.id('/*link*/./*link*/_id')
         )
       ),
-      s.where(
-        s.and(
-          s.eq(
-            s.id('/*table*/./*object*/_id'),
-            s.value((request) => {
+      sb.where(
+        sb.and(
+          sb.eq(
+            sb.id('/*table*/./*object*/_id'),
+            sb.value((request) => {
               return request.params['/*object*/_id']
             })
           ),
-          s.search()
+          sb.search()
             .columns(
             /* #each search */
-              '/*link*/./*name*/'/* comma */
+              '/*link*/./*name*/' /* comma */
             /* /each */
             )
             .search((request) => {
@@ -40,18 +40,18 @@ export function buildList () {
             })
         )
       ),
-      s.orderBy(
-        s.order()
+      sb.orderBy(
+        sb.order()
           .columns(
           /* #each order */
-            '/*link*/./*name*/'/* comma */
+            '/*link*/./*name*/' /* comma */
           /* /each */
           )
           .default(
           /* #each default */
-            s['/*direction*/'](
-              s.id('/*link*/./*name*/')
-            )/* comma */
+            sb['/*direction*/'](
+              sb.id('/*link*/./*name*/')
+            ) /* comma */
           /* /each */
           )
           .order((request) => {
@@ -61,8 +61,8 @@ export function buildList () {
             return request.url.query.by
           })
       ),
-      s.limit(
-        s.slice()
+      sb.limit(
+        sb.slice()
           .offset((request) => {
             return request.url.query.offset
           })
@@ -73,5 +73,5 @@ export function buildList () {
     )
   )
 
-  return s
+  return sb
 }

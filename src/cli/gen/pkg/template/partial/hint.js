@@ -1,11 +1,11 @@
-export function hint (v) {
+export function hint (vb) {
   /* #if link */
-  v.hint()
+  vb.hint()
     /* #if options.validate */
     .format('/*object*/.link./*link*/form.hint./*name*/')
   /* /if */
   /* else */
-  v.hint()
+  vb.hint()
     /* #if options.validate */
     .format('/*object*/.form.hint./*name*/')
   /* /if */

@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function email (v) {
-  v.email()
+export function email (vb) {
+  vb.email()
     .attributes({
       name: '/*name*/'
     })
@@ -26,6 +26,6 @@ export function email (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

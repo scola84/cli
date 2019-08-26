@@ -1,36 +1,36 @@
-export function buildCurrent (v) {
-  return v.group().class('current').append(
-    v.title().text(
-      v.print().format('/*object*/.link./*link*/.title.current')
+export function buildCurrent (vb) {
+  return vb.group().class('current').append(
+    vb.title().text(
+      vb.print().format('/*object*/.link./*link*/.title.current')
     ),
-    v.body(
-      v.item(
-        v.click(
-          v.button().class('click delete ion-ios-remove-circle')
+    vb.body(
+      vb.item(
+        vb.click(
+          vb.button().class('click delete ion-ios-remove-circle')
         ).act(
-          v.deleteObject().name('/*object*/', '/*link*/')
+          vb.deleteObject().name('/*object*/', '/*link*/')
         ),
-        v.radio().wrap().attributes({
+        vb.radio().wrap().attributes({
           name: '/*link*/_id',
           checked: 'checked',
           required: 'required',
-          value: (box, data) => data['/*link*/_id']
+          value: (route, data) => data['/*link*/_id']
         }),
-        v.label(
-          v.div().class('l1').text(
-            v.print().format('/*object*/.link./*link*/.list.item.l1')
+        vb.label(
+          vb.div().class('l1').text(
+            vb.print().format('/*object*/.link./*link*/.list.item.l1')
           ),
-          v.div().class('l2').text(
-            v.print().format('/*object*/.link./*link*/.list.item.l2')
+          vb.div().class('l2').text(
+            vb.print().format('/*object*/.link./*link*/.list.item.l2')
           ),
-          v.div().class('l3').text(
-            v.print().format('/*object*/.link./*link*/.list.item.l3')
+          vb.div().class('l3').text(
+            vb.print().format('/*object*/.link./*link*/.list.item.l3')
           ),
-          v.div().class('l4').text(
-            v.print().format('/*object*/.link./*link*/.list.item.l4')
+          vb.div().class('l4').text(
+            vb.print().format('/*object*/.link./*link*/.list.item.l4')
           ),
-          v.div().class('l5').text(
-            v.print().format('/*object*/.link./*link*/.list.item.l5')
+          vb.div().class('l5').text(
+            vb.print().format('/*object*/.link./*link*/.list.item.l5')
           )
         )
       )

@@ -1,51 +1,51 @@
-export function buildNew (v) {
-  return v.group().class('new').append(
-    v.title().text(
-      v.print().format('/*object*/.link./*link*/.title.new')
+export function buildNew (vb) {
+  return vb.group().class('new').append(
+    vb.title().text(
+      vb.print().format('/*object*/.link./*link*/.title.new')
     ),
-    v.hint().format('/*object*/.link./*link*/.form.hint./*link*/_id'),
-    v.body(
-      v.getList().name('/*link*/').append(
-        v.list().empty(
-          v.item().class('empty').append(
-            v.radio().wrap().attributes({
+    vb.hint().format('/*object*/.link./*link*/.form.hint./*link*/_id'),
+    vb.body(
+      vb.getList().name('/*link*/').append(
+        vb.list().empty(
+          vb.item().class('empty').append(
+            vb.radio().wrap().attributes({
               name: '/*link*/_id',
               required: 'required'
             }),
-            v.label(
-              v.div().class('l1').text(
-                v.print().format('message.nodata')
+            vb.label(
+              vb.div().class('l1').text(
+                vb.print().format('message.nodata')
               )
             )
           )
         ).append(
-          v.item().name('label').class('click').append(
-            v.radio().wrap().attributes({
+          vb.item().name('label').class('click').append(
+            vb.radio().wrap().attributes({
               name: '/*link*/_id',
               required: 'required',
-              value: (box, data) => data['/*link*/_id']
+              value: (route, data) => data['/*link*/_id']
             }),
-            v.label(
-              v.div().class('l1').text(
-                v.print().format('/*object*/.link./*link*/.list.item.l1')
+            vb.label(
+              vb.div().class('l1').text(
+                vb.print().format('/*object*/.link./*link*/.list.item.l1')
               ),
-              v.div().class('l2').text(
-                v.print().format('/*object*/.link./*link*/.list.item.l2')
+              vb.div().class('l2').text(
+                vb.print().format('/*object*/.link./*link*/.list.item.l2')
               ),
-              v.div().class('l3').text(
-                v.print().format('/*object*/.link./*link*/.list.item.l3')
+              vb.div().class('l3').text(
+                vb.print().format('/*object*/.link./*link*/.list.item.l3')
               ),
-              v.div().class('l4').text(
-                v.print().format('/*object*/.link./*link*/.list.item.l4')
+              vb.div().class('l4').text(
+                vb.print().format('/*object*/.link./*link*/.list.item.l4')
               ),
-              v.div().class('l5').text(
-                v.print().format('/*object*/.link./*link*/.list.item.l5')
+              vb.div().class('l5').text(
+                vb.print().format('/*object*/.link./*link*/.list.item.l5')
               )
             )
           )
         )
       ),
-      v.loading()
+      vb.loading()
     )
   )
 }

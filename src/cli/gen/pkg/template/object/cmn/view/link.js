@@ -1,88 +1,88 @@
-export function buildLinkCore (v) {
-  return v.main(
+export function buildLinkCore (vb) {
+  return vb.main(
     /* #each links */
-    v.getList().name('/*object*/', '/*link*/').count(5).append(
-      v.group(
-        v.title(
-          v.div().text(
-            v.print().format('/*object*/.link./*link*/.title.d')
+    vb.getList().name('/*object*/', '/*link*/').count(5).append(
+      vb.group(
+        vb.title(
+          vb.div().text(
+            vb.print().format('/*object*/.link./*link*/.title.d')
           )
         ),
-        v.body(
-          v.list().key((box, data) => {
+        vb.body(
+          vb.list().key((route, data) => {
             return data['/*link*/_id']
           }).empty(
-            v.item().append(
-              v.label(
-                v.div().class('l1').text(
-                  v.print().format('message.nodata')
+            vb.item().append(
+              vb.label(
+                vb.div().class('l1').text(
+                  vb.print().format('message.nodata')
                 )
               )
             )
           ).append(
-            v.click(
-              v.item()
+            vb.click(
+              vb.item()
               /* #eq sides compare="two" */
                 .class('click icon')
               /* else */
                 .class('icon')
               /* /eq */
                 .append(
-                  v.click(
-                    v.button().class('edit ion-ios-information-circle-outline')
+                  vb.click(
+                    vb.button().class('edit ion-ios-information-circle-outline')
                   ).act(
-                    v.route().view('edit-/*object*/-/*link*/:{/*object*/_id,/*link*/_id}@pop')
+                    vb.route().view('edit-/*object*/-/*link*/:{/*object*/_id,/*link*/_id}@pop')
                   ),
-                  v.label(
-                    v
+                  vb.label(
+                    vb
                     /* #eq sides compare="two" */
                       .anchor()
                     /* else */
                       .div()
                     /* /eq */
                       .class('l1').text(
-                        v.print().format('/*object*/.link./*link*/.list.item.l1')
+                        vb.print().format('/*object*/.link./*link*/.list.item.l1')
                       ),
-                    v.div().class('l2').text(
-                      v.print().format('/*object*/.link./*link*/.list.item.l2')
+                    vb.div().class('l2').text(
+                      vb.print().format('/*object*/.link./*link*/.list.item.l2')
                     ),
-                    v.div().class('l3').text(
-                      v.print().format('/*object*/.link./*link*/.list.item.l3')
+                    vb.div().class('l3').text(
+                      vb.print().format('/*object*/.link./*link*/.list.item.l3')
                     ),
-                    v.div().class('l4').text(
-                      v.print().format('/*object*/.link./*link*/.list.item.l4')
+                    vb.div().class('l4').text(
+                      vb.print().format('/*object*/.link./*link*/.list.item.l4')
                     ),
-                    v.div().class('l5').text(
-                      v.print().format('/*object*/.link./*link*/.list.item.l5')
+                    vb.div().class('l5').text(
+                      vb.print().format('/*object*/.link./*link*/.list.item.l5')
                     )
                   )
                   /* #eq sides compare="two" */
                   ,
-                  v.icon().class('ion-ios-arrow-forward')
-                  /* /eq */
+                  vb.icon().class('ion-ios-arrow-forward')
+                /* /eq */
                 )
             ).act(
-              v.route().view('view-/*link*/:{/*link*/_id}@main:rtl&mem')
+              vb.route().view('view-/*link*/:{/*link*/_id}@main:rtl&mem')
             ),
-            v.click().allow((box, data) => {
+            vb.click().allow((route, data) => {
               return data.length === 5
             }).append(
-              v.item().class('click icon').append(
-                v.icon().class('ion-ios-list'),
-                v.label(
-                  v.anchor().class('l1').text(
-                    v.print().format('/*object*/.link./*link*/.list.button.list')
+              vb.item().class('click icon').append(
+                vb.icon().class('ion-ios-list'),
+                vb.label(
+                  vb.anchor().class('l1').text(
+                    vb.print().format('/*object*/.link./*link*/.list.button.list')
                   )
                 ),
-                v.icon().class('ion-ios-arrow-forward')
+                vb.icon().class('ion-ios-arrow-forward')
               )
             ).act(
-              v.route().view('list-/*object*/-/*link*/:{/*object*/_id}@main:mem&rtl')
+              vb.route().view('list-/*object*/-/*link*/:{/*object*/_id}@main:mem&rtl')
             )
           )
         )
       )
-    )/* comma */
+    ) /* comma */
     /* /each */
   )
 }

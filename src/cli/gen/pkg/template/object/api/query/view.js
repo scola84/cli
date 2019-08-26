@@ -1,20 +1,20 @@
 import { SqlBuilder } from '@scola/doc'
 
 export function buildView () {
-  const s = new SqlBuilder({
+  const sb = new SqlBuilder({
     type: 'object'
   })
 
-  s.build(
-    s.query(
-      s.select('*'),
-      s.from(
-        s.id('/*object*/')
+  sb.build(
+    sb.query(
+      sb.select('*'),
+      sb.from(
+        sb.id('/*object*/')
       ),
-      s.where(
-        s.eq(
-          s.id('/*object*/_id'),
-          s.value((request) => {
+      sb.where(
+        sb.eq(
+          sb.id('/*object*/_id'),
+          sb.value((request) => {
             return request.params['/*object*/_id']
           })
         )
@@ -22,5 +22,5 @@ export function buildView () {
     )
   )
 
-  return s
+  return sb
 }

@@ -1,5 +1,5 @@
-export function buildViewCore (v) {
-  return v.main(
+export function buildViewCore (vb) {
+  return vb.main(
 
   )
 }

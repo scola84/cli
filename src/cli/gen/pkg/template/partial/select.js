@@ -1,5 +1,5 @@
-export function select (v) {
-  v.select().wrap()
+export function select (vb) {
+  vb.select().wrap()
     .attributes({
       name: '/*name*/'
     })
@@ -9,22 +9,22 @@ export function select (v) {
     })
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
     .append(
       /* #each values */
-      v.option()
+      vb.option()
         .attributes({
           value: '/*value*/'
         })
       /* #if link */
         .text(
-          v.print().format('/*object*/.link./*link*/.form.value./*value*/')
-        )/* comma */
+          vb.print().format('/*object*/.link./*link*/.form.value./*value*/')
+        ) /* comma */
       /* else */
         .text(
-          v.print().format('/*object*/.form.value./*value*/')
-        )/* comma */
+          vb.print().format('/*object*/.form.value./*value*/')
+        ) /* comma */
       /* /if */
       /* /each */
     )

@@ -1,22 +1,22 @@
-export function buildActions (v) {
-  return v.fold(
-    v.group(
-      v.title().class('click fold handle all').append(
-        v.button().text(
-          v.print().format('title.actions')
+export function buildActions (vb) {
+  return vb.fold(
+    vb.group(
+      vb.title().class('click fold handle all').append(
+        vb.button().text(
+          vb.print().format('title.actions')
         )
       ),
-      v.body(
-        v.click(
-          v.item().class('click fold transition').append(
-            v.label(
-              v.anchor().class('l1').text(
-                v.print().format('/*object*/.link./*link*/.list.button.link')
+      vb.body(
+        vb.click(
+          vb.item().class('click fold transition').append(
+            vb.label(
+              vb.anchor().class('l1').text(
+                vb.print().format('/*object*/.link./*link*/.list.button.link')
               )
             )
           )
         ).act(
-          v.route().view('add-/*object*/-/*link*/:{/*object*/_id}@pop')
+          vb.route().view('add-/*object*/-/*link*/:{/*object*/_id}@pop')
         )
       )
     )

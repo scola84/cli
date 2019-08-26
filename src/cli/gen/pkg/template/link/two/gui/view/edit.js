@@ -4,68 +4,68 @@ import { buildFieldset } from '../../../cmn/view//*link*//fieldset'
 import { buildNew } from '../../../cmn/view//*link*//new'
 
 export function buildEdit () {
-  const v = new ViewBuilder()
+  const vb = new ViewBuilder()
 
-  v.build(
-    v.panel(
-      v.header(
-        v.bar(
-          v.left(
-            v.click(
-              v.button().text(
-                v.print().format('button.cancel')
+  vb.build(
+    vb.panel(
+      vb.header(
+        vb.bar(
+          vb.left(
+            vb.click(
+              vb.button().text(
+                vb.print().format('button.cancel')
               )
             ).act(
-              v.route().view('@self:clr')
+              vb.route().view('@self:clr')
             )
           ),
-          v.center(
-            v.title().text(
-              v.print().format('/*object*/.link./*link*/.title.1')
+          vb.center(
+            vb.title().text(
+              vb.print().format('/*object*/.link./*link*/.title.1')
             )
           ),
-          v.right(
-            v.button().form('edit').text(
-              v.print().format('button.save')
+          vb.right(
+            vb.button().form('edit').text(
+              vb.print().format('button.save')
             )
           )
         ),
-        v.input(
-          v.search().class('in').placeholder(
-            v.print().format('search.placeholder')
+        vb.input(
+          vb.search().class('in').placeholder(
+            vb.print().format('search.placeholder')
           )
         ).act(
-          v.selector('.search'),
-          v.selector('.group.new .body')
+          vb.selector('.search'),
+          vb.selector('.group.new .body')
         ),
-        v.message(),
-        v.progress()
+        vb.message(),
+        vb.progress()
       ),
-      v.scroll(
-        v.body(
-          v.submit(
-            v.form().id('edit').append(
-              v.getObject().name('/*object*/', '/*link*/').append(
-                buildFieldset(v),
-                buildCurrent(v)
+      vb.scroll(
+        vb.body(
+          vb.submit(
+            vb.form().id('edit').append(
+              vb.getObject().name('/*object*/', '/*link*/').append(
+                buildFieldset(vb),
+                buildCurrent(vb)
               ),
-              buildNew(v)
+              buildNew(vb)
             )
           ).act(
-            v.validate(
-              v.selector('.body form')
+            vb.validate(
+              vb.selector('.body form')
             ).act(
-              v.putObject().name('/*object*/', '/*link*/')
+              vb.putObject().name('/*object*/', '/*link*/')
             ).err(
-              v.selector('.body .hint')
+              vb.selector('.body .hint')
             )
           )
         )
       ).act(
-        v.selector('.group.new .body')
+        vb.selector('.group.new .body')
       )
     )
   )
 
-  return v
+  return vb
 }

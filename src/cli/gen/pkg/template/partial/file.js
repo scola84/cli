@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function file (v) {
-  v.file()
+export function file (vb) {
+  vb.file()
     .attributes({
       name: '/*name*/'
     })
@@ -31,6 +31,6 @@ export function file (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }

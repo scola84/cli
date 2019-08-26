@@ -1,39 +1,39 @@
 import { SqlBuilder } from '@scola/doc'
 
 export function buildList () {
-  const s = new SqlBuilder({
+  const sb = new SqlBuilder({
     type: 'list'
   })
 
-  s.build(
-    s.query(
-      s.select('*'),
-      s.from(
-        s.id('/*object*/')
+  sb.build(
+    sb.query(
+      sb.select('*'),
+      sb.from(
+        sb.id('/*object*/')
       ),
-      s.where(
-        s.search()
+      sb.where(
+        sb.search()
           .columns(
           /* #each search */
-            '/*name*/'/* comma */
+            '/*name*/' /* comma */
           /* /each */
           )
           .search((request) => {
             return request.url.query.search
           })
       ),
-      s.orderBy(
-        s.order()
+      sb.orderBy(
+        sb.order()
           .columns(
           /* #each order */
-            '/*name*/'/* comma */
+            '/*name*/' /* comma */
           /* /each */
           )
           .default(
           /* #each default */
-            s['/*direction*/'](
-              s.id('/*name*/')
-            )/* comma */
+            sb['/*direction*/'](
+              sb.id('/*name*/')
+            ) /* comma */
           /* /each */
           )
           .order((request) => {
@@ -43,8 +43,8 @@ export function buildList () {
             return request.url.query.by
           })
       ),
-      s.limit(
-        s.slice()
+      sb.limit(
+        sb.slice()
           .offset((request) => {
             return request.url.query.offset
           })
@@ -55,5 +55,5 @@ export function buildList () {
     )
   )
 
-  return s
+  return sb
 }

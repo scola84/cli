@@ -1,3 +1,4 @@
+import beautify from 'js-beautify'
 import fs from 'fs-extra'
 import standard from 'standard'
 import { generateContent } from './content'
@@ -5,8 +6,7 @@ import { generateHeader } from './header'
 
 export function generateFile (box, data, source, target) {
   const header = generateHeader()
-  const name = target.replace(process.cwd(), '')
-  const options = { fix: true }
+  const name = target.replace(process.cwd() + '/', '')
 
   let targetContent = null
 
@@ -26,6 +26,7 @@ export function generateFile (box, data, source, target) {
   try {
     sourceContent = generateContent(sourceContent, data)
     sourceContent = header + '\n\n' + sourceContent
+    sourceContent = beautify(sourceContent, box.beautify)
   } catch (error) {
     box.failed.push(`${name} (${error})`)
     return
@@ -35,7 +36,7 @@ export function generateFile (box, data, source, target) {
 
   while (fixedContent) {
     try {
-      fixedContent = standard.lintTextSync(fixedContent, options)
+      fixedContent = standard.lintTextSync(fixedContent, box.standard)
       fixedContent = fixedContent.results[0].output
       sourceContent = fixedContent || sourceContent
     } catch (error) {

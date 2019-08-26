@@ -22,7 +22,7 @@ export function buildList () {
           sb.search()
             .columns(
             /* #each search */
-              '/*link*/./*name*/'/* comma */
+              '/*link*/./*name*/' /* comma */
             /* /each */
             )
             .search((request) => {
@@ -34,14 +34,14 @@ export function buildList () {
         sb.order()
           .columns(
           /* #each order */
-            '/*link*/./*name*/'/* comma */
+            '/*link*/./*name*/' /* comma */
           /* /each */
           )
           .default(
           /* #each default */
             sb['/*direction*/'](
               sb.id('/*link*/./*name*/')
-            )/* comma */
+            ) /* comma */
           /* /each */
           )
           .order((request) => {

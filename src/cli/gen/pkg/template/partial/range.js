@@ -1,7 +1,7 @@
 import fieldset from './fieldset'
 
-export function range (v) {
-  v.range()
+export function range (vb) {
+  vb.range()
     .attributes({
       name: '/*name*/'
     })
@@ -31,6 +31,6 @@ export function range (v) {
     )
     /* /if */
     .properties({
-      value: (box, data) => data['/*name*/']
+      value: (route, data) => data['/*name*/']
     })
 }
