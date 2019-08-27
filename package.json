@@ -9,7 +9,7 @@
   "module": "./index.js",
   "name": "@scola/cli",
   "repository": "github:scola84/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": [
     "dist/"
   ],
