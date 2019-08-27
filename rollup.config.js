@@ -1,7 +1,10 @@
-import babel from 'rollup-plugin-babel'
-import commonjs from 'rollup-plugin-commonjs'
-import fs from 'fs'
-import resolve from 'rollup-plugin-node-resolve'
+import { rollup } from '@scola/worker'
+import { name, version } from './package.json'
+
+const {
+  banner,
+  plugins
+} = rollup
 
 const external = [
   '@scola/doc',
@@ -24,35 +27,12 @@ const external = [
 const file = 'dist/cli.cjs.js'
 const input = './src/cli.js'
 
-function chmod () {
-  return {
-    writeBundle () {
-      fs.chmodSync(file, '0755')
-    }
-  }
-}
-
-const plugins = [
-  resolve(),
-  commonjs(),
-  babel({
-    plugins: [
-      ['@babel/plugin-transform-runtime', {
-        helpers: false
-      }]
-    ],
-    presets: [
-      ['@babel/preset-env']
-    ]
-  }),
-  chmod()
-]
-
 export default [{
   input,
   external,
   output: {
-    banner: '#!/usr/bin/env node',
+    banner: '#!/usr/bin/env node\n' +
+      banner(name, version),
     file,
     format: 'cjs'
   },

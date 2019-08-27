@@ -1,35 +1,35 @@
 {
-  "name": "@scola/cli",
-  "version": "0.0.0",
-  "description": "Scola CLI",
-  "repository": "github:scola84/cli",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
+  "bin": "./dist/cli.cjs.js",
+  "description": "Scola CLI",
   "license": "MIT",
   "main": "./dist/cli.cjs.js",
   "module": "./index.js",
-  "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
-    "glob-run": "^0.1.7",
-    "rollup": "^1.20.2",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "standard": "^14.0.2"
-  },
+  "name": "@scola/cli",
+  "repository": "github:scola84/cli",
+  "version": "0.0.0",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "build": "rollup -cm",
+    "prepublishOnly": "npm run format && rm -rf dist/ && rollup -c",
     "format": "glob-run js-beautify -r 'src/**/*.{css,js}' && npx standard --fix"
   },
+  "devDependencies": {
+    "glob-run": "^0.1.7",
+    "js-beautify": "^1.10.2",
+    "rollup": "^1.20.2",
+    "standard": "^14.0.2"
+  },
   "dependencies": {
+    "@scola/doc": "^1.0.2",
+    "@scola/dom": "^1.0.2",
+    "@scola/worker": "^3.0.3",
     "commander": "^3.0.0",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
     "handlebars": "^4.1.2",
     "handlebars-helpers": "^0.10.0",
-    "js-beautify": "^1.10.2",
     "lodash-es": "^4.17.15",
     "qs": "^6.8.0",
     "recursive-readdir": "^2.2.2",
