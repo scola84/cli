@@ -14,8 +14,8 @@
     "dist/"
   ],
   "scripts": {
-    "prepublishOnly": "npm run format && rm -rf dist/ && rollup -c",
-    "format": "glob-run js-beautify -r 'src/**/*.{css,js}' && npx standard --fix"
+    "format": "glob-run js-beautify -r 'src/**/*.{css,js}' && npx standard --fix",
+    "preversion": "npm run format && rm -rf dist/ && rollup -c"
   },
   "devDependencies": {
     "glob-run": "^0.1.7",
@@ -28,6 +28,7 @@
     "commander": "^3.0.0",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
+    "glob": "^7.1.4",
     "handlebars": "^4.1.2",
     "handlebars-helpers": "^0.10.0",
     "js-beautify": "^1.10.2",
@@ -35,7 +36,6 @@
     "qs": "^6.8.0",
     "recursive-readdir": "^2.2.2",
     "source-map-support": "^0.5.13",
-    "standard": "^14.0.2",
-    "xregexp": "^4.2.4"
+    "standard": "^14.0.2"
   }
 }

@@ -1,5 +1,5 @@
 import { Router, Slicer, Unifier } from '@scola/worker'
-import { collectDirectories } from '../helper'
+import { readdirSync } from 'fs'
 
 import {
   custom,
@@ -18,7 +18,15 @@ export function exec () {
 
   const slicer = new Slicer({
     filter (box) {
-      return collectDirectories(box.filter, box.recursive)
+      const cwd = process.cwd()
+
+      if (box.recursive !== true) {
+        return [cwd]
+      }
+
+      return readdirSync(cwd).map((item) => {
+        return cwd + '/' + item
+      })
     }
   })
 

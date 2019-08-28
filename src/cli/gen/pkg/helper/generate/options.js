@@ -1,5 +1,5 @@
+import fs from 'fs-extra'
 import readDir from 'recursive-readdir'
-import { extractBody } from '../../../../../helper'
 
 export function generateOptions (box, data, tdir, callback) {
   if (typeof data.name === 'undefined') {
@@ -38,7 +38,14 @@ export function generateOptions (box, data, tdir, callback) {
         return
       }
 
-      extractBody(file).forEach((value) => {
+      let content = String(fs.readFileSync(file))
+
+      content = content.slice(
+        content.indexOf('{', content.match(/export/).index) + 1,
+        content.lastIndexOf('}')
+      ).trim().split('\n')
+
+      content.forEach((value) => {
         value = value.replace(',', '').trim()
         field.options[value] = true
       })

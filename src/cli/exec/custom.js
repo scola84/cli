@@ -29,17 +29,33 @@ const alias = {
 }
 
 export function custom () {
-  function resolve (command) {
-    command = alias[command] || command
+  function resolveOptions (box, command) {
+    if (command.match(/^scola/)) {
+      command += box.dryRun ? ' -d' : ''
+      command += box.filter ? ` -f "${box.filter}"` : ''
+      command += box.skip ? ` -s "${box.skip}"` : ''
+    }
 
-    return Array.isArray(command) ? command.map((cmd) => {
-      return resolve(cmd)
-    }).join(' && ') : command
+    return command
+  }
+
+  function resolveCommand (box, command) {
+    if (alias[command]) {
+      command = alias[command]
+    }
+
+    if (typeof command === 'string') {
+      return resolveOptions(box, command)
+    }
+
+    return command.map((cmd) => {
+      return resolveCommand(box, cmd)
+    }).join(' && ')
   }
 
   return new Worker({
     act (box, data, callback) {
-      const command = resolve(box.command)
+      const command = resolveCommand(box, box.command)
 
       this.log('cli', box, data, `${data}$ ${command}`)
 
