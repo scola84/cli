@@ -6,7 +6,7 @@ import {
 const {
   banner,
   plugins
-} = require('./rollup')
+} = require('@scola/worker/rollup')
 
 const external = [
   '@scola/doc',
