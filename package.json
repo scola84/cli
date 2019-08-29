@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "format": "glob-run js-beautify -r 'src/**/*.{css,js}' && npx standard --fix",
+    "postpublish": "chmod 0755 dist/cli.cjs.js",
     "preversion": "npm run format && rm -rf dist/ && rollup -c"
   },
   "devDependencies": {
