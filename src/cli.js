@@ -25,12 +25,17 @@ const router = new Router({
     return box.error === true ? null : true
   },
   filter (box) {
-    return box.name
+    return box.cmd
   }
 })
 
 function action (options) {
-  options.name = options._name
+  if (typeof options !== 'object') {
+    console.error('scola: Provide valid options')
+    return
+  }
+
+  options.cmd = options._name
 
   console.out = (type, worker, box, data, line) => {
     if (type === 'cli') {
@@ -77,7 +82,8 @@ commander
   .option('-c, --clean', 'Whether to clean provisioned files')
   .option('-d, --dry-run', 'Whether to dry run the generation')
   .option('-h, --host <host>', 'The host of the database')
-  .option('-o, --object <object>', 'The object to generate code for')
+  .option('-n, --name <name>', 'The name of the object to generate code for')
+  .option('-o, --out <out>', 'The directory to put the files into')
   .option('-t, --type <type>', 'The type of code to be generated')
   .action(action)
 

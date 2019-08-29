@@ -7,7 +7,7 @@ export function generateDir (box, data, callback, base, name) {
     '/src/cli/gen/pkg/template/' +
     base
 
-  const tdir = process.cwd()
+  const tdir = process.cwd() + '/' + (box.out || 'src')
 
   generateOptions(box, data, tdir, () => {
     readDir(sdir, (error, files) => {

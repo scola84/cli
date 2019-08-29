@@ -14,9 +14,9 @@ export function setupOptions (box, data, callback) {
     }
   }
 
-  if (typeof box.object === 'undefined') {
+  if (typeof box.name === 'undefined') {
     if (Boolean(box.clean) === false) {
-      throw new Error('scola: Provide a valid object name using -o')
+      throw new Error('scola: Provide a valid object name using -n')
     }
   }
 

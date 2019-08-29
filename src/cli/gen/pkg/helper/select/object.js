@@ -1,3 +1,3 @@
 export function selectObject (box) {
-  return `%${box.object}%`
+  return `%${box.name}%`
 }

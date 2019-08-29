@@ -11,9 +11,9 @@ export function mergeObject (box, data) {
       link
     ] = table.split('_')
 
-    if (link === box.object) {
+    if (link === box.name) {
       link = object
-      object = box.object
+      object = box.name
     }
 
     let sides = 'two'
