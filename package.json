@@ -24,7 +24,7 @@
     "@babel/runtime": "^7.5.5",
     "glob-run": "^0.1.7",
     "minimist": "^1.2.0",
-    "rollup": "^1.20.2",
+    "rollup": "^1.20.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@scola/doc": "^1.0.2",
     "@scola/dom": "^1.0.2",
-    "@scola/worker": "^3.0.3",
+    "@scola/worker": "^3.1.1",
     "commander": "^3.0.0",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
@@ -48,6 +48,6 @@
     "qs": "^6.8.0",
     "recursive-readdir": "^2.2.2",
     "source-map-support": "^0.5.13",
-    "standard": "^14.0.2"
+    "standard": "^14.1.0"
   }
 }
