@@ -6,6 +6,7 @@ const alias = {
   changes: 'git status -s',
   cdeps: [
     'git add package.json',
+    'git add package-lock.json',
     'git commit -m "Update dependencies"'
   ],
   ideps: 'scola exec -c install',
@@ -13,12 +14,12 @@ const alias = {
   major: [
     'npm version major',
     'npm publish',
-    'git push --follow-tags'
+    'push'
   ],
   minor: [
     'npm version minor',
     'npm publish',
-    'git push --follow-tags'
+    'push'
   ],
   patch: [
     'npm version patch',
