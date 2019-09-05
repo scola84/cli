@@ -1,5 +1,5 @@
 const { exec } = require('child_process')
-const { plugins } = require('@scola/worker/rollup')
+const plugins = require('@scola/worker/rollup.plugins')
 
 const finish = {
   writeBundle: () => exec([
