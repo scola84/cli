@@ -1,12 +1,12 @@
-import {
-  name,
-  version
-} from './package.json'
+const { exec } = require('child_process')
+const { plugins } = require('@scola/worker/rollup')
 
-const {
-  banner,
-  plugins
-} = require('@scola/worker/rollup')
+const finish = {
+  writeBundle: () => exec([
+    'sed -i \'1i #!/usr/bin/env node\\n\' -i dist/cli.cjs.js',
+    'chmod 0755 dist/cli.cjs.js'
+  ].join(' && '))
+}
 
 const external = [
   '@scola/doc',
@@ -33,10 +33,11 @@ export default [{
   input,
   external,
   output: {
-    banner: '#!/usr/bin/env node\n' +
-      banner(name, version),
     file,
     format: 'cjs'
   },
-  plugins
+  plugins: [
+    ...plugins,
+    finish
+  ]
 }]
