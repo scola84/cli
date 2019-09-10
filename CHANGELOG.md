@@ -1,3 +1,9 @@
+## 1.4.0 (Tue Sep 10 2019)
+
+* Update dependencies
+* Implement clone, refactor
+* Update scripts
+
 ## 1.3.5
 
 * Update dependencies
