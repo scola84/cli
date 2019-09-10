@@ -17,9 +17,11 @@ const external = [
   'find-up',
   'fs',
   'fs-extra',
+  'glob',
   'handlebars',
   'handlebars-helpers',
   'js-beautify',
+  'path',
   'qs',
   'recursive-readdir',
   'source-map-support/register',
@@ -27,7 +29,7 @@ const external = [
 ]
 
 const file = 'dist/cli.cjs.js'
-const input = './src/cli.js'
+const input = './index.js'
 
 export default [{
   input,

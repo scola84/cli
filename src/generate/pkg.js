@@ -97,6 +97,9 @@ export function pkg () {
         this.log('cli', box, data, report.join('\n'))
         this.pass(box, data, callback)
       })
+    },
+    decide (box, data) {
+      return Array.isArray(data)
     }
   })
 
