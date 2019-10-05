@@ -1,5 +1,5 @@
 const { exec } = require('child_process')
-const plugins = require('@scola/worker/rollup.plugins')
+const plugins = require('@scola/lib/rollup.plugins')
 
 const finish = {
   writeBundle: () => exec([
@@ -9,9 +9,7 @@ const finish = {
 }
 
 const external = [
-  '@scola/doc',
-  '@scola/dom',
-  '@scola/worker',
+  '@scola/lib',
   'child_process',
   'commander',
   'find-up',
@@ -29,7 +27,7 @@ const external = [
 ]
 
 const file = 'dist/cli.cjs.js'
-const input = './index.js'
+const input = './src/cli.js'
 
 export default [{
   input,
