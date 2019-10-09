@@ -1,22 +1,31 @@
+/* eslint-disable no-console */
+
 import 'source-map-support/register'
 
-import { setup } from '@scola/lib'
+import {
+  SqlBuilder,
+  Worker
+} from '@scola/lib'
+
 import commander from 'commander'
 
 import { version } from '../package.json'
 import * as commands from './cli/'
 
-setup.api()
+SqlBuilder.setup()
+Worker.setup()
 
-console.out = (type, box, data) => {
-  if (type === 'fail' && !data.logged) {
-    data.logged = true
+console.fail = (box, data) => {
+  if (data.logged === true) {
+    return
+  }
 
-    if (data.message.slice(0, 5) === 'scola') {
-      console.error(data.message)
-    } else {
-      console.error(data)
-    }
+  data.logged = true
+
+  if (data.message.slice(0, 5) === 'scola') {
+    console.error(data.message)
+  } else {
+    console.error(data)
   }
 }
 

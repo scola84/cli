@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import {
   Slicer,
   SqlBuilder,
@@ -104,10 +106,8 @@ export function pkg () {
 
   const mysqlLinkSelector = new SqlBuilder({
     decide (box, data) {
-      return (
-        box.host.indexOf('mysql') === 0 &&
+      return box.host.indexOf('mysql') === 0 &&
         data.link !== undefined
-      )
     },
     host: 'mysql',
     merge (box, data, { result }) {
@@ -127,10 +127,8 @@ export function pkg () {
 
   const postgresqlLinkSelector = new SqlBuilder({
     decide (box, data) {
-      return (
-        box.host.indexOf('postgresql') === 0 &&
+      return box.host.indexOf('postgresql') === 0 &&
         data.link !== undefined
-      )
     },
     host: 'postgresql',
     merge (box, data, { result }) {

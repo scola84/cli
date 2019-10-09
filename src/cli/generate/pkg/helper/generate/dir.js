@@ -3,15 +3,12 @@ import { generateFile } from './file'
 import { generateOptions } from './options'
 
 export function generateDir (box, data, callback, base, name) {
-  const sdir = __dirname.slice(0, -5) +
-    '/src/cli/generate/pkg/template/' +
-    base
-
-  const tdir = process.cwd() + '/' + (box.out)
+  const sdir = `${__dirname.slice(0, -5)}/src/cli/generate/pkg/template/${base}`
+  const tdir = `${process.cwd()}/${box.out}`
 
   generateOptions(box, data, tdir, () => {
     readDir(sdir, (error, files) => {
-      if (error) {
+      if (error !== null) {
         callback(error)
         return
       }
@@ -25,7 +22,7 @@ export function generateDir (box, data, callback, base, name) {
           return target.indexOf(sct) > -1
         })
 
-        if (name) {
+        if (name !== undefined) {
           target.splice(target.indexOf(section) + 2, 0, name)
         }
 

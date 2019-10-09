@@ -20,12 +20,11 @@ export function setupOptions (box, data, callback) {
     }
   }
 
-  const options = findup
-    .sync('.jsbeautifyrc')
+  const options = findup.sync('.jsbeautifyrc')
 
-  box.beautify = options ? JSON.parse(
-    fs.readFileSync(options)
-  ) : {}
+  box.beautify = options === undefined
+    ? {}
+    : JSON.parse(fs.readFileSync(options))
 
   box.standard = {
     fix: true

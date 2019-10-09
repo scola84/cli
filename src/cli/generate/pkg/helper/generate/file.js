@@ -6,7 +6,7 @@ import { generateHeader } from './header'
 
 export function generateFile (box, data, source, target) {
   const header = generateHeader()
-  const name = target.replace(process.cwd() + '/', '')
+  const name = target.replace(`${process.cwd()}/`, '')
 
   let targetContent = null
 
@@ -25,7 +25,7 @@ export function generateFile (box, data, source, target) {
 
   try {
     sourceContent = generateContent(sourceContent, data)
-    sourceContent = header + '\n\n' + sourceContent
+    sourceContent = `${header}\n\n${sourceContent}`
     sourceContent = beautify(sourceContent, box.beautify)
   } catch (error) {
     box.failed.push(`${name} (${error})`)

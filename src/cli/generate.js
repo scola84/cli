@@ -34,7 +34,7 @@ export function generate (commander) {
     .option('-d, --dry-run', 'Dry run the command')
     .option('-h, --host <host>', 'Read from this database host')
     .option('-n, --name <name>', 'Generate code for this object')
-    .option('-o, --out <out>', 'Write the files into this directory', 'src/')
+    .option('-o, --out <out>', 'Write the files into this directory', 'src')
     .action((type, options) => {
       handler.handle(Object.assign(options, {
         type

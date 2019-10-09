@@ -7,12 +7,12 @@ export function comma (context) {
   let isLast = parent.last
 
   while (parent) {
-    if (parent.last) {
+    if (parent.last === true) {
       isLast = isLast && true
     }
 
     parent = parent._parent
   }
 
-  return isLast ? '' : ','
+  return isLast === true ? '' : ','
 }

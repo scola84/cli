@@ -1,10 +1,12 @@
+/* eslint-disable no-console */
+
 import { Worker } from '@scola/lib'
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import { normalize } from 'path'
 
 function readPackage () {
-  const pkgFile = process.cwd() + '/package.json'
+  const pkgFile = `${process.cwd()}/package.json`
 
   return JSON.parse(
     readFileSync(
@@ -18,11 +20,12 @@ export function clone (commander) {
 
   const cloner = new Worker({
     act (box) {
-      const destination = normalize(process.cwd() + '/' + box.destination)
+      const destination = normalize(`${process.cwd()}/${box.destination}`)
       const exclude = box.exclude ? new RegExp(box.exclude) : null
       const include = new RegExp(box.include)
 
       let pkg = null
+      let shouldClone = false
 
       try {
         pkg = readPackage()
@@ -37,14 +40,17 @@ export function clone (commander) {
       }
 
       Object.keys(pkg.dependencies).forEach((dependency) => {
-        if (dependency.match(include) && !dependency.match(exclude)) {
+        shouldClone = dependency.match(include) !== null &&
+          dependency.match(exclude) === null
+
+        if (shouldClone === true) {
           let [scope, name] = dependency.split('/')
           name = name || scope
 
           const command = `git clone ${box.source}/${name} ${destination}/${scope}/${name}`
           const options = { cwd: process.cwd(), stdio: 'inherit' }
 
-          if (box.dryRun) {
+          if (box.dryRun === true) {
             console.log(command)
           } else {
             try {

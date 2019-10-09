@@ -5,19 +5,21 @@ function rmdir (box, path, prefix = path) {
   const header = generateHeader()
   const files = fs.readdirSync(path)
 
-  files.sort().forEach((file) => {
-    file = `${path}/${file}`
+  let filePath = null
 
-    if (fs.lstatSync(file).isDirectory()) {
-      rmdir(box, file, prefix)
+  files.sort().forEach((file) => {
+    filePath = `${path}/${file}`
+
+    if (fs.lstatSync(filePath).isDirectory() === true) {
+      rmdir(box, filePath, prefix)
     } else {
-      const content = String(fs.readFileSync(file))
+      const content = String(fs.readFileSync(filePath))
 
       if (content.slice(0, header.length) === header) {
-        box.cleaned.push(file.replace(prefix, ''))
+        box.cleaned.push(filePath.replace(prefix, ''))
 
         if (Boolean(box.dryRun) === false) {
-          fs.unlinkSync(file)
+          fs.unlinkSync(filePath)
         }
       }
     }

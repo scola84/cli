@@ -9,7 +9,8 @@ export function mergeField (object, link, field) {
   field.options = qs.parse(field.options)
 
   field.values = field.options.type === 'select'
-    ? field.values : ''
+    ? field.values
+    : ''
 
   field.values = (field.values || '')
     .split(',')

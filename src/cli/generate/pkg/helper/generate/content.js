@@ -1,7 +1,9 @@
 import Handlebars from 'handlebars'
 
 export function generateContent (content, data) {
-  content = content
+  let generatedContent = content
+
+  generatedContent = generatedContent
     .replace(/\n\s+(\/\*comma)/g, '$1')
     .replace(/\{/g, '<<<')
     .replace(/\}/g, '>>>')
@@ -10,13 +12,13 @@ export function generateContent (content, data) {
     .replace(/\/\*\s?/g, '{{')
     .replace(/\s?\*\//g, '}}')
 
-  content = Handlebars.compile(content)(data)
+  generatedContent = Handlebars.compile(generatedContent)(data)
 
-  content = content
+  generatedContent = generatedContent
     .replace(/<<</g, '{')
     .replace(/>>>/g, '}')
     .replace(/(\w+)\['(\w+)'\]/g, '$1.$2')
     .replace(/\['(\w+)'\]/g, '$1')
 
-  return content
+  return generatedContent
 }

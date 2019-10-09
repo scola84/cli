@@ -11,11 +11,11 @@ export function setupHandlebars (box, data, callback) {
     Handlebars.registerHelper(name, scolaHelpers[name])
   })
 
-  const sdir = __dirname.slice(0, -5) +
-    '/src/cli/generate/pkg/template/partial/'
+  const dir = __dirname.slice(0, -5)
+  const sdir = `${dir}/src/cli/generate/pkg/template/partial/`
 
   readDir(sdir, (error, files) => {
-    if (error) {
+    if (error !== null) {
       callback(error)
       return
     }

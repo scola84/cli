@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { Worker } from '@scola/lib'
 import { execSync } from 'child_process'
 import { readFileSync, writeFileSync } from 'fs'
@@ -44,9 +46,7 @@ export function install (commander) {
       const exclude = box.exclude ? new RegExp(box.exclude) : null
       const include = new RegExp(box.include)
 
-      const files = glob.sync(
-        process.cwd() + '/' + box.files
-      )
+      const files = glob.sync(`${process.cwd()}/${box.files}`)
 
       const modules = new Set()
       const self = process.cwd().split('/').slice(-2).join('/')
@@ -64,7 +64,8 @@ export function install (commander) {
           [scope, module] = module.split('/')
 
           module = module && scope.slice(0, 1) === '@'
-            ? ([scope, module].join('/')) : scope
+            ? ([scope, module].join('/'))
+            : scope
 
           if (builtins.indexOf(module) === -1) {
             if (module !== self) {
@@ -74,10 +75,11 @@ export function install (commander) {
         })
       })
 
-      const pkgFile = process.cwd() + '/package.json'
+      const pkgFile = `${process.cwd()}/package.json`
       const pkg = JSON.parse(readFileSync(pkgFile))
 
       let hasErrors = false
+      let shouldAdd = false
 
       try {
         if (Boolean(box.dryRun) === false) {
@@ -92,14 +94,17 @@ export function install (commander) {
       const options = { cwd: process.cwd(), stdio: 'inherit' }
 
       dependencies.forEach((dependency) => {
-        if (hasErrors) {
+        if (hasErrors === true) {
           return
         }
 
-        if (dependency.match(include) && !dependency.match(exclude)) {
+        shouldAdd = dependency.match(include) !== null &&
+          dependency.match(exclude) === null
+
+        if (shouldAdd === true) {
           const command = commands[box.program].add(dependency)
 
-          if (box.dryRun) {
+          if (box.dryRun === true) {
             console.log(command)
           } else {
             try {
@@ -111,13 +116,14 @@ export function install (commander) {
         }
       })
 
-      if (hasErrors) {
+      if (hasErrors === true) {
         writeFileSync(pkgFile, JSON.stringify(pkg))
-        this.log('fail', box, new Error('scola: Errors occurred while installing dependencies'))
+        this.log('fail', box,
+          new Error('scola: Errors occurred while installing dependencies'))
         return
       }
 
-      if (box.dryRun) {
+      if (box.dryRun === true) {
         console.log(commands[box.program].install())
       } else {
         try {

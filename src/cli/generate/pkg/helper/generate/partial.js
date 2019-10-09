@@ -6,13 +6,13 @@ export function generatePartial (file, context) {
   const match = content.match(/export/)
 
   content = content.slice(
-    match ? content.indexOf('{', match.index) + 1 : 0,
-    match ? content.lastIndexOf('}') : content.length
+    match === null ? 0 : content.indexOf('{', match.index) + 1,
+    match === null ? content.length : content.lastIndexOf('}')
   )
 
-  content = match
-    ? content.trim().replace('//', '')
-    : content
+  content = match === null
+    ? content
+    : content.trim().replace('//', '')
 
   return generateContent(
     content,

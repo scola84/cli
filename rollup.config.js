@@ -37,7 +37,9 @@ export default [{
     format: 'cjs'
   },
   plugins: [
-    ...plugins,
+    ...plugins({
+      format: 'cjs'
+    }),
     finish
   ]
 }]

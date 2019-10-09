@@ -7,10 +7,10 @@ export function generateOptions (box, data, tdir, callback) {
     return
   }
 
-  const dir = tdir + `/cmn/view/${data.name}/fieldset`
+  const dir = `${tdir}/cmn/view/${data.name}/fieldset`
 
   readDir(dir, (error, files) => {
-    if (error) {
+    if (error !== null) {
       callback()
       return
     }
@@ -39,6 +39,7 @@ export function generateOptions (box, data, tdir, callback) {
       }
 
       let content = String(fs.readFileSync(file))
+      let option = null
 
       content = content.slice(
         content.indexOf('{', content.match(/export/).index) + 1,
@@ -46,8 +47,8 @@ export function generateOptions (box, data, tdir, callback) {
       ).trim().split('\n')
 
       content.forEach((value) => {
-        value = value.replace(',', '').trim()
-        field.options[value] = true
+        option = value.replace(',', '').trim()
+        field.options[option] = true
       })
     })
 

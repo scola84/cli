@@ -2,10 +2,10 @@ import groupBy from 'lodash-es/groupBy'
 import { mergeField } from './field'
 
 export function mergeObject (box, data) {
-  data = groupBy(data, 'table')
+  const tables = groupBy(data, 'table')
   const links = []
 
-  return Object.keys(data).map((table) => {
+  return Object.keys(tables).map((table) => {
     let [
       object,
       link
@@ -18,13 +18,13 @@ export function mergeObject (box, data) {
 
     let sides = 'two'
 
-    const fields = data[table]
+    const fields = tables[table]
       .filter((field) => {
-        if (field.primary) {
+        if (Boolean(field.primary) === true) {
           return false
         }
 
-        if (field.name.match(/_id/)) {
+        if (field.name.match(/_id/) !== null) {
           sides = 'one'
           return false
         }
@@ -35,7 +35,7 @@ export function mergeObject (box, data) {
         return mergeField(object, link, field)
       })
 
-    if (link) {
+    if (link !== undefined) {
       links.push({
         link,
         object,
@@ -72,20 +72,20 @@ export function mergeObject (box, data) {
 
     definition.groups.forEach((group) => {
       group.fields.forEach((field) => {
-        if (field.options.default) {
+        if (field.options.default !== undefined) {
           definition.default.push({
             direction: field.options.default,
             name: field.name
           })
         }
 
-        if (field.options.order) {
+        if (field.options.order !== undefined) {
           definition.order.push({
             name: field.name
           })
         }
 
-        if (field.options.search) {
+        if (field.options.search !== undefined) {
           definition.search.push({
             name: field.name
           })

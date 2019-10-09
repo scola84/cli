@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { Slicer, Resolver, Worker } from '@scola/lib'
 import { execSync } from 'child_process'
 import { readdirSync } from 'fs'
@@ -30,15 +32,17 @@ const alias = {
 }
 
 function resolveCommand (box, command) {
-  if (alias[command]) {
-    command = alias[command]
+  let resolvedCommand = command
+
+  if (alias[resolvedCommand] !== undefined) {
+    resolvedCommand = alias[resolvedCommand]
   }
 
-  if (typeof command === 'string') {
-    return command
+  if (typeof resolvedCommand === 'string') {
+    return resolvedCommand
   }
 
-  return command.map((cmd) => {
+  return resolvedCommand.map((cmd) => {
     return resolveCommand(box, cmd)
   }).join(' && ')
 }
@@ -55,7 +59,7 @@ export function execute (commander) {
         console.log(data)
       }
 
-      if (box.dryRun) {
+      if (box.dryRun === true) {
         console.log(command)
       } else {
         try {
@@ -82,7 +86,7 @@ export function execute (commander) {
       }
 
       return readdirSync(cwd).map((item) => {
-        return cwd + '/' + item
+        return `${cwd}/${item}`
       })
     }
   })
