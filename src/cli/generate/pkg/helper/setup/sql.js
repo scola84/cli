@@ -1,7 +1,7 @@
-import { SqlBuilder } from '@scola/lib'
+import { Worker } from '@scola/lib'
 
 export function setupSql (bx, data, callback) {
-  SqlBuilder.setHosts({
+  Worker.config.sql = {
     mysql: (box) => {
       return {
         dialect: 'mysql',
@@ -16,7 +16,7 @@ export function setupSql (bx, data, callback) {
         dsn: box.host
       }
     }
-  })
+  }
 
   callback()
 }

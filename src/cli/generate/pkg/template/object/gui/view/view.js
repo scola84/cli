@@ -3,36 +3,36 @@ import { buildAside } from '../../../cmn/view//*object*//view/aside'
 import { buildViewCore } from '../../../cmn/view//*object*//view'
 
 export function buildView () {
-  const hb = new HtmlBuilder()
-
-  hb.build(
-    hb.panel(
-      hb.header(
-        hb.bar(
-          hb.left(
-            hb.click(
-              hb.button().menu().class('icon ion-ios-arrow-back').text(
-                hb.print().format('button.back')
+  const viewer = new HtmlBuilder({
+    view (hb) {
+      return hb.panel(
+        hb.header(
+          hb.bar(
+            hb.left(
+              hb.click(
+                hb.button().menu().class('icon ion-ios-arrow-back').text(
+                  hb.print().format('button.back')
+                )
+              ).act(
+                hb.route().view('@main:bwd&ltr')
               )
-            ).act(
-              hb.route().view('@main:bwd&ltr')
+            ),
+            hb.center(
+              hb.title().text(
+                hb.print().format('/*object*/.title.1')
+              )
             )
           ),
-          hb.center(
-            hb.title().text(
-              hb.print().format('/*object*/.title.1')
-            )
-          )
+          hb.message(),
+          hb.progress()
         ),
-        hb.message(),
-        hb.progress()
-      ),
-      hb.body(
-        buildViewCore(hb),
-        buildAside(hb)
+        hb.body(
+          buildViewCore(hb),
+          buildAside(hb)
+        )
       )
-    )
-  )
+    }
+  })
 
-  return hb
+  return viewer
 }

@@ -24,6 +24,10 @@ export function mergeObject (box, data) {
           return false
         }
 
+        if (field.options === null) {
+          return false
+        }
+
         if (field.name.match(/_id/) !== null) {
           sides = 'one'
           return false

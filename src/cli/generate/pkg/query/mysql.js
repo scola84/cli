@@ -1,5 +1,5 @@
 export function mysql (s, schema, name) {
-  s.build(
+  s.setQuery(
     s.query(
       s.select(
         s.as(
